@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile — KRIYA{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl w-full mx-auto space-y-8 py-6">
+    <!-- Header -->
+    <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl flex items-center space-x-6">
+        <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-3xl">👤</div>
+        <div>
+            <h1 class="text-2xl font-black text-white">{{ user.username }}</h1>
+            <p class="text-slate-400 text-sm mt-0.5">Phone: {{ user.phone_number|default:"Not Provided" }}</p>
+            <span class="inline-block mt-2 bg-emerald-500/10 text-emerald-400 text-xs px-2.5 py-0.5 rounded border border-emerald-500/20 font-semibold uppercase tracking-wider">
+                {{ user.get_role_display }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Details Card -->
+    <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-800">
+        <div class="p-6">
+            <h3 class="text-lg font-bold text-white mb-4">Livelihood & Deployment Details</h3>
+            <div class="grid grid-cols-2 gap-6 text-sm">
+                <div>
+                    <span class="text-slate-500 block">Roster Status</span>
+                    <strong class="text-emerald-400 block mt-1 text-base">{{ worker_status }}</strong>
+                </div>
+                <div>
+                    <span class="text-slate-500 block">Current Assignment</span>
+                    <strong class="text-slate-300 block mt-1 text-base">{{ current_job }}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6">
+            <h3 class="text-lg font-bold text-white mb-4">Training & Certifications</h3>
+            <div class="flex items-center space-x-3">
+                {% if training_completed %}
+                    <span class="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center font-bold text-sm">✓</span>
+                    <span class="text-slate-300 font-medium">Vocational Core Training Completed</span>
+                {% else %}
+                    <span class="w-6 h-6 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 flex items-center justify-center font-bold text-sm">!</span>
+                    <span class="text-slate-300 font-medium">Core Training In Progress</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="p-6">
+            <h3 class="text-lg font-bold text-white mb-4">Help & Support</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">
+                If you need to update your phone number, list new skills, or report an issue with your current assignment, please contact the SEA Movement NGO Coordinator immediately.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

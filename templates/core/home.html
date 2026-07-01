@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}KRIYA — Trusted Blue-Collar Matching NGO Platform{% endblock %}
+
+{% block content %}
+<div class="py-12 flex flex-col items-center justify-center text-center max-w-4xl mx-auto space-y-8">
+    <div class="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide">
+        <span>🌱 Driven by SEA Movement</span>
+    </div>
+    
+    <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-none bg-gradient-to-r from-white via-slate-200 to-emerald-400 bg-clip-text text-transparent">
+        Empowering Livelihoods through Vetted Talent Matching
+    </h1>
+    
+    <p class="text-slate-400 text-lg md:text-xl max-w-2xl leading-relaxed">
+        KRIYA is an inbound demand-supply coordinator that bridges local businesses with verified, pre-trained blue-collar workers. Ensuring safe, dignified livelihoods and certified skills.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+        {% if user.is_authenticated %}
+            {% if user.is_manager_user %}
+                <a href="{% url 'dashboard:ngo_dashboard' %}" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-8 py-3 rounded-lg transition shadow-lg shadow-emerald-500/10 text-center">Go to NGO Dashboard</a>
+            {% elif user.is_client_user %}
+                <a href="{% url 'dashboard:client_dashboard' %}" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-8 py-3 rounded-lg transition shadow-lg shadow-emerald-500/10 text-center">Post a Job Requirement</a>
+            {% else %}
+                <a href="{% url 'dashboard:worker_dashboard' %}" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-8 py-3 rounded-lg transition shadow-lg shadow-emerald-500/10 text-center">View Worker Profile</a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'register' %}" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-8 py-3 rounded-lg transition shadow-lg shadow-emerald-500/10 text-center">Register Now</a>
+            <a href="{% url 'login' %}" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-8 py-3 rounded-lg transition text-center">Employer Login</a>
+        {% endif %}
+    </div>
+
+    <!-- Core Features Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full pt-16">
+        <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl text-left hover:border-slate-700 transition">
+            <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-lg flex items-center justify-center font-bold text-xl mb-4">💼</div>
+            <h3 class="text-lg font-bold mb-2">Demand Vetting</h3>
+            <p class="text-slate-500 text-sm">We verify local contractors and employers to ensure safe conditions, ethical terms, and legal wage rates.</p>
+        </div>
+        
+        <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl text-left hover:border-slate-700 transition">
+            <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-lg flex items-center justify-center font-bold text-xl mb-4">🎓</div>
+            <h3 class="text-lg font-bold mb-2">Skilled Supply</h3>
+            <p class="text-slate-500 text-sm">Every worker registered in our roster undergoes structured training in vocational skills and safety.</p>
+        </div>
+
+        <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl text-left hover:border-slate-700 transition">
+            <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-lg flex items-center justify-center font-bold text-xl mb-4">⚡</div>
+            <h3 class="text-lg font-bold mb-2">Smart Matching</h3>
+            <p class="text-slate-500 text-sm">Axum-powered database filters matching skills, availability, and location to queue deployment candidates instantly.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

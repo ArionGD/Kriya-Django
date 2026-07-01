@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Register — KRIYA{% endblock %}
+
+{% block content %}
+<div class="max-w-md w-full mx-auto my-6 bg-slate-950 border border-slate-800 p-8 rounded-xl shadow-2xl">
+    <div class="text-center mb-6">
+        <h2 class="text-3xl font-black text-white">Create Account</h2>
+        <p class="text-slate-400 text-sm mt-2">Join KRIYA to start worker recruitment or profile listing</p>
+    </div>
+
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        
+        <div>
+            <label for="id_username" class="block text-sm font-semibold text-slate-300 mb-1">Username</label>
+            <input type="text" name="username" id="id_username" required
+                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition">
+            {% if form.username.errors %}
+                <p class="text-red-400 text-xs mt-1">{{ form.username.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="id_email" class="block text-sm font-semibold text-slate-300 mb-1">Email Address</label>
+            <input type="email" name="email" id="id_email" required
+                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition">
+            {% if form.email.errors %}
+                <p class="text-red-400 text-xs mt-1">{{ form.email.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="id_phone_number" class="block text-sm font-semibold text-slate-300 mb-1">Phone Number</label>
+            <input type="text" name="phone_number" id="id_phone_number" required
+                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition">
+            {% if form.phone_number.errors %}
+                <p class="text-red-400 text-xs mt-1">{{ form.phone_number.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="id_role" class="block text-sm font-semibold text-slate-300 mb-1">I want to register as a:</label>
+            <select name="role" id="id_role" required
+                    class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                <option value="WORKER">Worker (Looking for employment)</option>
+                <option value="CLIENT">Client / Organization (Looking to hire)</option>
+            </select>
+            {% if form.role.errors %}
+                <p class="text-red-400 text-xs mt-1">{{ form.role.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="id_password" class="block text-sm font-semibold text-slate-300 mb-1">Password</label>
+            <input type="password" name="password" id="id_password" required
+                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition">
+            {% if form.password.errors %}
+                <p class="text-red-400 text-xs mt-1">{{ form.password.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <div>
+            <label for="id_password_confirm" class="block text-sm font-semibold text-slate-300 mb-1">Confirm Password</label>
+            <input type="password" name="password_confirm" id="id_password_confirm" required
+                   class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition">
+            {% if form.password_confirm.errors %}
+                <p class="text-red-400 text-xs mt-1">{{ form.password_confirm.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-3 rounded-lg transition shadow-lg shadow-emerald-500/10 mt-2">
+            Create Account
+        </button>
+    </form>
+
+    <div class="mt-6 text-center text-sm text-slate-500">
+        Already have an account? 
+        <a href="{% url 'login' %}" class="text-emerald-400 hover:underline">Log in here</a>
+    </div>
+</div>
+{% endblock %}
