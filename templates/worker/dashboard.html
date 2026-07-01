@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}My Profile — KRIYA{% endblock %}
+{% block title %}My Profile — Kriya{% endblock %}
 
 {% block content %}
 <div class="max-w-2xl w-full mx-auto space-y-8 py-6">
@@ -10,7 +10,7 @@
         <div>
             <h1 class="text-2xl font-black text-slate-900">{{ user.username }}</h1>
             <p class="text-slate-500 text-sm mt-0.5">Phone: {{ user.phone_number|default:"Not Provided" }}</p>
-            <span class="inline-block mt-2 bg-orange-50 text-orange-700 text-xs px-2.5 py-0.5 rounded border border-orange-100 font-semibold uppercase tracking-wider">
+            <span class="inline-block mt-2 bg-blue-50 text-blue-700 text-xs px-2.5 py-0.5 rounded border border-blue-100 font-semibold uppercase tracking-wider">
                 {{ user.get_role_display }}
             </span>
         </div>
@@ -23,7 +23,7 @@
             <div class="grid grid-cols-2 gap-6 text-sm">
                 <div>
                     <span class="text-slate-400 block">Roster Status</span>
-                    <strong class="text-emerald-600 block mt-1 text-base">{{ worker_status }}</strong>
+                    <strong class="text-blue-600 block mt-1 text-base">{{ worker_status }}</strong>
                 </div>
                 <div>
                     <span class="text-slate-400 block">Current Assignment</span>
@@ -36,7 +36,7 @@
             <h3 class="text-lg font-bold text-slate-900 mb-4">Training & Certifications</h3>
             <div class="flex items-center space-x-3">
                 {% if training_completed %}
-                    <span class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center font-bold text-sm">✓</span>
+                    <span class="w-6 h-6 rounded-full bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center font-bold text-sm">✓</span>
                     <span class="text-slate-700 font-medium">Vocational Core Training Completed</span>
                 {% else %}
                     <span class="w-6 h-6 rounded-full bg-orange-50 text-orange-600 border border-orange-100 flex items-center justify-center font-bold text-sm">!</span>
@@ -48,7 +48,7 @@
         <div class="p-6">
             <h3 class="text-lg font-bold text-slate-900 mb-4">Help & Support</h3>
             <p class="text-slate-500 text-sm leading-relaxed">
-                If you need to update your phone number, list new skills, or report an issue with your current assignment, please contact the SEA Movement NGO Coordinator immediately.
+                If you need to update your phone number, list new skills, or report an issue with your current assignment, please contact the Kriya Coordinator immediately.
             </p>
         </div>
     </div>

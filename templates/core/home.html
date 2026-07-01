@@ -1,35 +1,35 @@
 {% extends 'base.html' %}
 
-{% block title %}KRIYA — Trusted Blue-Collar Matching NGO Platform{% endblock %}
+{% block title %}Kriya — Trusted Professional Skill Grid Matching Platform{% endblock %}
 
 {% block content %}
 <div class="space-y-20 py-8">
     
     <!-- Hero Section -->
     <div class="flex flex-col items-center justify-center text-center max-w-4xl mx-auto space-y-8">
-        <div class="inline-flex items-center space-x-2 bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide shadow-sm">
-            <span>🌱 An Initiative by SEA Movement</span>
+        <div class="inline-flex items-center space-x-2 bg-blue-50 border border-blue-200 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide shadow-sm">
+            <span>💼 Professional Skill Grid Matching</span>
         </div>
         
         <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-none text-slate-900">
-            Dignified Livelihoods. <span class="bg-gradient-to-r from-emerald-600 via-sky-500 to-orange-500 bg-clip-text text-transparent">Vetted Workforces.</span>
+            Dignified Livelihoods. <span class="bg-gradient-to-r from-blue-600 via-sky-500 to-slate-950 bg-clip-text text-transparent">Vetted Workforces.</span>
         </h1>
         
         <p class="text-slate-500 text-lg md:text-xl max-w-2xl leading-relaxed">
-            KRIYA is an inbound demand-supply matching system bridging local contractors with verified, pre-trained blue-collar workers. Built to secure livelihoods displaced by climate challenges.
+            Kriya is a secure, inbound demand-supply coordinator bridging local businesses and contractors with verified, pre-trained blue-collar workers.
         </p>
 
         <div class="flex flex-col sm:flex-row gap-4 pt-4">
             {% if user.is_authenticated %}
                 {% if user.is_manager_user %}
-                    <a href="{% url 'manager:dashboard' %}" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3.5 rounded-lg transition shadow-md shadow-emerald-600/10 text-center">Go to NGO Dashboard</a>
+                    <a href="{% url 'manager:dashboard' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3.5 rounded-lg transition shadow-md shadow-blue-600/10 text-center">Go to NGO Dashboard</a>
                 {% elif user.is_client_user %}
-                    <a href="{% url 'client:dashboard' %}" class="bg-sky-600 hover:bg-sky-700 text-white font-bold px-8 py-3.5 rounded-lg transition shadow-md shadow-sky-600/10 text-center">Post job requirement</a>
+                    <a href="{% url 'client:dashboard' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3.5 rounded-lg transition shadow-md shadow-blue-600/10 text-center">Post Job Requirement</a>
                 {% else %}
-                    <a href="{% url 'worker:dashboard' %}" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-lg transition shadow-md shadow-orange-500/10 text-center">View my profile</a>
+                    <a href="{% url 'worker:dashboard' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3.5 rounded-lg transition shadow-md shadow-blue-600/10 text-center">View My Profile</a>
                 {% endif %}
             {% else %}
-                <a href="{% url 'register' %}" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3.5 rounded-lg transition shadow-md shadow-emerald-600/15 text-center cursor-pointer">Register to Hire</a>
+                <a href="{% url 'register' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3.5 rounded-lg transition shadow-md shadow-blue-600/15 text-center cursor-pointer">Register to Hire</a>
                 <a href="{% url 'register' %}" class="bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 font-semibold px-8 py-3.5 rounded-lg transition text-center shadow-sm cursor-pointer">Join as Worker</a>
             {% endif %}
         </div>
@@ -39,7 +39,7 @@
     <div class="max-w-6xl mx-auto space-y-12">
         <div class="text-center space-y-4">
             <h2 class="text-3xl font-black text-slate-900">Inside the Skill Grid Program</h2>
-            <p class="text-slate-500 max-w-xl mx-auto text-sm">We don't just match profiles; we build skilled capabilities and protect lives on the ground.</p>
+            <p class="text-slate-500 max-w-xl mx-auto text-sm font-medium">We don't just match profiles; we build skilled capabilities and protect lives on the ground.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -47,15 +47,15 @@
             <!-- block 1 -->
             <div class="bg-white border border-slate-200 p-8 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col justify-between">
                 <div class="space-y-4">
-                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl">🔍</div>
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center font-bold text-xl">🔍</div>
                     <h3 class="text-xl font-bold text-slate-900">1. Sourcing & Screening</h3>
                     <p class="text-slate-500 text-sm leading-relaxed">
-                        We actively coordinate with rural communities to identify laborers impacted by agricultural drought or job losses. Each candidate is vetted with basic KYC and background checks.
+                        We actively coordinate with local community leaders to identify and onboard candidates. Each worker undergoes basic KYC verification and skill screening.
                     </p>
                 </div>
                 <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between text-xs text-slate-400 font-semibold uppercase">
                     <span>Scope</span>
-                    <span class="text-emerald-600">On-the-Ground</span>
+                    <span class="text-blue-600">On-the-Ground</span>
                 </div>
             </div>
 
@@ -77,7 +77,7 @@
             <!-- block 3 -->
             <div class="bg-white border border-slate-200 p-8 rounded-2xl shadow-sm hover:shadow-md transition flex flex-col justify-between">
                 <div class="space-y-4">
-                    <div class="w-12 h-12 bg-orange-50 text-orange-500 rounded-xl flex items-center justify-center font-bold text-xl">🛡️</div>
+                    <div class="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center font-bold text-xl">🛡️</div>
                     <h3 class="text-xl font-bold text-slate-900">3. Welfare & Safety Auditing</h3>
                     <p class="text-slate-500 text-sm leading-relaxed">
                         No worker is sent to unsafe sites. We audit every client contractor to ensure minimum wage guarantees, standard work hours, health facilities, and verified housing.
@@ -85,7 +85,7 @@
                 </div>
                 <div class="pt-6 border-t border-slate-100 mt-6 flex justify-between text-xs text-slate-400 font-semibold uppercase">
                     <span>Ethics</span>
-                    <span class="text-orange-500">100% Compliant</span>
+                    <span class="text-slate-900">100% Compliant</span>
                 </div>
             </div>
 
@@ -95,22 +95,22 @@
     <!-- Dynamic Dashboard Previews -->
     <div class="bg-slate-100 border border-slate-200/50 py-16 px-6 rounded-3xl max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div class="space-y-6">
-            <span class="text-xs bg-sky-100 border border-sky-200 text-sky-700 px-3 py-1 rounded-full font-bold uppercase tracking-wider">How it works</span>
+            <span class="text-xs bg-blue-100 border border-blue-200 text-blue-700 px-3 py-1 rounded-full font-bold uppercase tracking-wider">How it works</span>
             <h2 class="text-4xl font-black text-slate-900 leading-tight">Fast Matchmaking. Safe Transactions.</h2>
             <p class="text-slate-500 leading-relaxed">
-                Our lightweight monolithic architecture connects employers with the NGO matching system instantly. Once a company posts a request, coordinators run SQL queries, filter by credentials/location, and deploy workers.
+                Our lightweight monolithic architecture connects employers with the NGO matching system instantly. Once a company posts a request, coordinators run database queries, filter by credentials/location, and deploy workers.
             </p>
             <div class="space-y-3">
                 <div class="flex items-center space-x-3 text-sm text-slate-700 font-semibold">
-                    <span class="text-emerald-600">✓</span>
+                    <span class="text-blue-600">✓</span>
                     <span>Direct matchmaking validation</span>
                 </div>
                 <div class="flex items-center space-x-3 text-sm text-slate-700 font-semibold">
-                    <span class="text-emerald-600">✓</span>
+                    <span class="text-blue-600">✓</span>
                     <span>Structured attendance and logging modules</span>
                 </div>
                 <div class="flex items-center space-x-3 text-sm text-slate-700 font-semibold">
-                    <span class="text-emerald-600">✓</span>
+                    <span class="text-blue-600">✓</span>
                     <span>Seamless integration with local SQLite db for prototyping</span>
                 </div>
             </div>
@@ -126,7 +126,7 @@
         <div class="bg-white border border-slate-200 p-8 rounded-2xl shadow-lg space-y-6">
             <h4 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-3 flex justify-between">
                 <span>Matching Engine Preview</span>
-                <span class="text-xs text-orange-500 font-medium tracking-wider uppercase animate-pulse">Live matching</span>
+                <span class="text-xs text-blue-600 font-medium tracking-wider uppercase animate-pulse">Live matching</span>
             </h4>
             <div class="space-y-4">
                 <div class="p-4 bg-slate-50 border border-slate-100 rounded-lg flex justify-between items-center">
@@ -134,21 +134,21 @@
                         <strong class="text-slate-800 text-sm block">12 Welders Required</strong>
                         <span class="text-slate-500 text-xs mt-0.5">Requested by L&T Chennai</span>
                     </div>
-                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold border border-emerald-100 px-2.5 py-1 rounded-full">8 Matches Found</span>
+                    <span class="text-xs bg-blue-50 text-blue-700 font-bold border border-blue-100 px-2.5 py-1 rounded-full">8 Matches Found</span>
                 </div>
                 <div class="p-4 bg-slate-50 border border-slate-100 rounded-lg flex justify-between items-center">
                     <div>
                         <strong class="text-slate-800 text-sm block">5 Painters Required</strong>
                         <span class="text-slate-500 text-xs mt-0.5">Requested by Chennai Decor</span>
                     </div>
-                    <span class="text-xs bg-emerald-50 text-emerald-700 font-bold border border-emerald-100 px-2.5 py-1 rounded-full">5 Matches Found</span>
+                    <span class="text-xs bg-blue-50 text-blue-700 font-bold border border-blue-100 px-2.5 py-1 rounded-full">5 Matches Found</span>
                 </div>
                 <div class="p-4 bg-slate-50 border border-slate-100 rounded-lg flex justify-between items-center">
                     <div>
                         <strong class="text-slate-800 text-sm block">3 Electricians Required</strong>
                         <span class="text-slate-500 text-xs mt-0.5">Requested by Smart Grid Corp</span>
                     </div>
-                    <span class="text-xs bg-orange-50 text-orange-700 font-bold border border-orange-100 px-2.5 py-1 rounded-full">Vetting Pending</span>
+                    <span class="text-xs bg-blue-50 text-blue-700 font-bold border border-blue-100 px-2.5 py-1 rounded-full">Vetting Pending</span>
                 </div>
             </div>
         </div>

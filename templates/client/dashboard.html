@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Client Console — KRIYA{% endblock %}
+{% block title %}Client Console — Kriya{% endblock %}
 
 {% block content %}
 <div class="space-y-8">
@@ -10,7 +10,7 @@
             <h1 class="text-3xl font-black text-slate-900">Client Console</h1>
             <p class="text-slate-500 text-sm mt-1">Submit staffing requirements and monitor active deployments</p>
         </div>
-        <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold transition text-sm shadow-sm cursor-pointer">Post New Job Requirement</button>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition text-sm shadow-sm cursor-pointer">Post New Job Requirement</button>
     </div>
 
     <!-- Quick Metrics -->
@@ -22,12 +22,12 @@
 
         <div class="bg-white border border-slate-200 p-6 rounded-xl relative overflow-hidden shadow-sm">
             <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Fulfilled Jobs</p>
-            <h3 class="text-3xl font-black text-emerald-600 mt-2">{{ fulfilled_requests }}</h3>
+            <h3 class="text-3xl font-black text-blue-600 mt-2">{{ fulfilled_requests }}</h3>
         </div>
 
         <div class="bg-white border border-slate-200 p-6 rounded-xl relative overflow-hidden shadow-sm">
             <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Currently Deployed Staff</p>
-            <h3 class="text-3xl font-black text-sky-600 mt-2">{{ deployed_count }}</h3>
+            <h3 class="text-3xl font-black text-slate-900 mt-2">{{ deployed_count }}</h3>
         </div>
     </div>
 
@@ -53,7 +53,7 @@
                             <h4 class="font-bold text-slate-800">Electricians (2 Workers)</h4>
                             <p class="text-slate-500 text-sm mt-1">Daily Wage: ₹900/day • Location: Chennai North</p>
                         </div>
-                        <span class="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded border border-emerald-100 font-semibold">Fulfilled</span>
+                        <span class="bg-blue-50 text-blue-700 text-xs px-2.5 py-1 rounded border border-blue-100 font-semibold">Fulfilled</span>
                     </div>
                 </div>
             </div>
@@ -64,15 +64,15 @@
             <h2 class="text-xl font-bold text-slate-900">NGO Verification Status</h2>
             <div class="bg-white border border-slate-200 p-6 rounded-xl space-y-4 shadow-sm">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-emerald-55 text-emerald-600 rounded-lg flex items-center justify-center font-bold text-2xl border border-emerald-100">✓</div>
+                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center font-bold text-2xl border border-blue-100">✓</div>
                     <div>
                         <h4 class="font-bold text-slate-800">Corporate Vetting Approved</h4>
-                        <p class="text-slate-500 text-xs mt-0.5">Your organization complies with KRIYA's safety & minimum wage guidelines.</p>
+                        <p class="text-slate-500 text-xs mt-0.5">Your organization complies with Kriya's safety & minimum wage guidelines.</p>
                     </div>
                 </div>
                 <div class="border-t border-slate-100 pt-4">
                     <p class="text-slate-500 text-sm leading-relaxed">
-                        Thank you for committing to providing safe, fair environments for our workers. In case of any dispute or emergency, contact the NGO command center directly.
+                        Thank you for committing to providing safe, fair environments for our workers. In case of any dispute or emergency, contact the NGO coordinator directly.
                     </p>
                 </div>
             </div>
