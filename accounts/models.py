@@ -5,8 +5,8 @@ class User(AbstractUser):
     class Role(models.TextChoices):
         SUPERUSER = 'SUPERUSER', 'Superuser'
         MANAGER = 'MANAGER', 'NGO Manager'
-        CLIENT = 'CLIENT', 'Client / Recruiter'
-        WORKER = 'WORKER', 'Worker'
+        CLIENT = 'CLIENT', 'Employer'
+        WORKER = 'WORKER', 'Employee'
 
     role = models.CharField(
         max_length=20,

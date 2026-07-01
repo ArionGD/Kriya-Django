@@ -8,43 +8,43 @@
     <div class="flex-1 flex flex-col justify-between py-4 overflow-y-auto">
         <nav class="space-y-1.5 px-4">
             <div x-show="!sidebarCollapsed" class="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                Worker Portal
+                Employee Portal
             </div>
             <div x-show="sidebarCollapsed" class="w-full border-t border-slate-200 my-2"></div>
 
             <!-- Profile Link -->
             <a href="{% url 'worker:dashboard' %}" 
-               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group bg-blue-50 border border-blue-100 text-blue-700"
+               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group {% if request.resolver_match.url_name == 'dashboard' %}bg-blue-50 border border-blue-100 text-blue-700{% else %}text-slate-600 hover:text-slate-900 hover:bg-slate-50{% endif %}"
                :class="sidebarCollapsed ? 'justify-center px-2' : 'justify-start px-4'"
                title="My Profile">
-                <i data-lucide="user" class="w-5 h-5 shrink-0 text-blue-600"></i>
+                <i data-lucide="user" class="w-5 h-5 shrink-0 {% if request.resolver_match.url_name == 'dashboard' %}text-blue-600{% else %}text-slate-400 group-hover:text-blue-600{% endif %}"></i>
                 <span x-show="!sidebarCollapsed">My Profile</span>
             </a>
 
             <!-- My Jobs -->
-            <a href="#" 
-               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all group"
+            <a href="{% url 'worker:my_assignments' %}" 
+               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group {% if request.resolver_match.url_name == 'my_assignments' %}bg-blue-50 border border-blue-100 text-blue-700{% else %}text-slate-600 hover:text-slate-900 hover:bg-slate-50{% endif %}"
                :class="sidebarCollapsed ? 'justify-center px-2' : 'justify-start px-4'"
-               title="My Jobs">
-                <i data-lucide="briefcase" class="w-5 h-5 shrink-0 text-slate-400 group-hover:text-blue-600"></i>
+               title="My Assignments">
+                <i data-lucide="briefcase" class="w-5 h-5 shrink-0 {% if request.resolver_match.url_name == 'my_assignments' %}text-blue-600{% else %}text-slate-400 group-hover:text-blue-600{% endif %}"></i>
                 <span x-show="!sidebarCollapsed">My Assignments</span>
             </a>
 
             <!-- Attendance Logs -->
-            <a href="#" 
-               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all group"
+            <a href="{% url 'worker:attendance' %}" 
+               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group {% if request.resolver_match.url_name == 'attendance' %}bg-blue-50 border border-blue-100 text-blue-700{% else %}text-slate-600 hover:text-slate-900 hover:bg-slate-50{% endif %}"
                :class="sidebarCollapsed ? 'justify-center px-2' : 'justify-start px-4'"
                title="Attendance Logs">
-                <i data-lucide="calendar-check" class="w-5 h-5 shrink-0 text-slate-400 group-hover:text-blue-600"></i>
+                <i data-lucide="calendar-check" class="w-5 h-5 shrink-0 {% if request.resolver_match.url_name == 'attendance' %}text-blue-600{% else %}text-slate-400 group-hover:text-blue-600{% endif %}"></i>
                 <span x-show="!sidebarCollapsed">Attendance</span>
             </a>
 
             <!-- Support -->
-            <a href="#" 
-               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all group"
+            <a href="{% url 'worker:support' %}" 
+               class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group {% if request.resolver_match.url_name == 'support' %}bg-blue-50 border border-blue-100 text-blue-700{% else %}text-slate-600 hover:text-slate-900 hover:bg-slate-50{% endif %}"
                :class="sidebarCollapsed ? 'justify-center px-2' : 'justify-start px-4'"
                title="Support">
-                <i data-lucide="help-circle" class="w-5 h-5 shrink-0 text-slate-400 group-hover:text-blue-600"></i>
+                <i data-lucide="help-circle" class="w-5 h-5 shrink-0 {% if request.resolver_match.url_name == 'support' %}text-blue-600{% else %}text-slate-400 group-hover:text-blue-600{% endif %}"></i>
                 <span x-show="!sidebarCollapsed">Support</span>
             </a>
         </nav>

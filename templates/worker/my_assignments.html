@@ -1,0 +1,47 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}My Assignments — Kriya{% endblock %}
+
+{% block header_title %}Assignments{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="border-b border-slate-200 pb-4">
+        <h1 class="text-3xl font-black text-slate-900">My Assignments</h1>
+        <p class="text-slate-500 text-sm mt-1">Review your active job assignments and past deployment history.</p>
+    </div>
+
+    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <table class="w-full text-left text-sm border-collapse">
+            <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider text-xs">
+                    <th class="p-4">Job Title</th>
+                    <th class="p-4">Employer</th>
+                    <th class="p-4">Daily Wage</th>
+                    <th class="p-4">Deployment Status</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                {% for item in assignments %}
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="p-4 font-semibold text-slate-800">{{ item.title }}</td>
+                    <td class="p-4 text-slate-600">{{ item.employer }}</td>
+                    <td class="p-4 text-slate-600">{{ item.wage }}</td>
+                    <td class="p-4">
+                        {% if item.status == 'Active' %}
+                            <span class="bg-blue-50 text-blue-700 text-xs px-2.5 py-0.5 rounded border border-blue-100 font-semibold">{{ item.status }}</span>
+                        {% else %}
+                            <span class="bg-slate-100 text-slate-600 text-xs px-2.5 py-0.5 rounded border border-slate-200 font-semibold">{{ item.status }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="p-8 text-center text-slate-400 font-medium">You don't have any job assignments yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block title %}Employer Vetting Audits — Kriya{% endblock %}
+
+{% block header_title %}Employers{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="border-b border-slate-200 pb-4">
+        <h1 class="text-3xl font-black text-slate-900">Employer Audits</h1>
+        <p class="text-slate-500 text-sm mt-1">Audit GSTIN credentials, housing sites, and minimum wage safety standards for requesting organizations.</p>
+    </div>
+
+    <!-- Employer Table -->
+    <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <table class="w-full text-left text-sm border-collapse">
+            <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider text-xs">
+                    <th class="p-4">Employer Name</th>
+                    <th class="p-4">Email</th>
+                    <th class="p-4">Phone</th>
+                    <th class="p-4">Vetting audit</th>
+                    <th class="p-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                {% for employer in employers %}
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="p-4 font-semibold text-slate-800">{{ employer.username }}</td>
+                    <td class="p-4 text-slate-600">{{ employer.email }}</td>
+                    <td class="p-4 text-slate-600">{{ employer.phone_number|default:"Not Provided" }}</td>
+                    <td class="p-4">
+                        <span class="bg-blue-50 text-blue-700 text-xs px-2.5 py-0.5 rounded border border-blue-100 font-semibold">Approved</span>
+                    </td>
+                    <td class="p-4">
+                        <button class="text-blue-600 hover:text-blue-800 font-semibold text-xs cursor-pointer">Revoke Audit</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="p-8 text-center text-slate-400 font-medium">No employers registered on the grid yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
