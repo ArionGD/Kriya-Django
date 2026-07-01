@@ -18,9 +18,9 @@ def register_view(request):
             
             # Redirect based on role
             if user.is_client_user():
-                return redirect('dashboard:client_dashboard')
+                return redirect('client:dashboard')
             elif user.is_worker_user():
-                return redirect('dashboard:worker_dashboard')
+                return redirect('worker:dashboard')
             else:
                 return redirect('home')
         else:
@@ -34,11 +34,11 @@ def login_view(request):
         # If already logged in, redirect to respective dashboard
         user = request.user
         if user.is_manager_user():
-            return redirect('dashboard:ngo_dashboard')
+            return redirect('manager:dashboard')
         elif user.is_client_user():
-            return redirect('dashboard:client_dashboard')
+            return redirect('client:dashboard')
         elif user.is_worker_user():
-            return redirect('dashboard:worker_dashboard')
+            return redirect('worker:dashboard')
         return redirect('home')
         
     if request.method == 'POST':
@@ -53,11 +53,11 @@ def login_view(request):
                 
                 # Redirect based on role
                 if user.is_manager_user():
-                    return redirect('dashboard:ngo_dashboard')
+                    return redirect('manager:dashboard')
                 elif user.is_client_user():
-                    return redirect('dashboard:client_dashboard')
+                    return redirect('client:dashboard')
                 elif user.is_worker_user():
-                    return redirect('dashboard:worker_dashboard')
+                    return redirect('worker:dashboard')
                 else:
                     return redirect('home')
             else:

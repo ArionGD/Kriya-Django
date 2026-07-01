@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     # Custom apps
     'accounts',
     'core',
-    'dashboard',
+    'client',
+    'worker',
+    'manager',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
