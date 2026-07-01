@@ -16,46 +16,46 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1e293b;
+            background: #f1f5f9;
         }
         ::-webkit-scrollbar-thumb {
-            background: #475569;
+            background: #cbd5e1;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
+            background: #94a3b8;
         }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
     
     <!-- Navbar -->
-    <nav class="bg-slate-950 border-b border-slate-800 py-4 px-6 sticky top-0 z-50">
+    <nav class="bg-white border-b border-slate-200/80 py-4 px-6 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="{% url 'home' %}" class="flex items-center space-x-2 text-2xl font-bold tracking-wider text-emerald-400">
-                <span>KRIYA</span>
+            <a href="{% url 'home' %}" class="flex items-center space-x-2 text-2xl font-black tracking-wider text-slate-950">
+                <span class="text-emerald-600">KRI</span><span class="text-orange-500">YA</span>
             </a>
             
             <div class="flex items-center space-x-6">
-                <a href="{% url 'home' %}" class="hover:text-emerald-400 transition">Home</a>
+                <a href="{% url 'home' %}" class="hover:text-emerald-600 font-medium text-slate-600 transition">Home</a>
                 
                 {% if user.is_authenticated %}
                     {% if user.is_manager_user %}
-                        <a href="{% url 'dashboard:ngo_dashboard' %}" class="hover:text-emerald-400 transition font-semibold text-emerald-300">NGO Dashboard</a>
+                        <a href="{% url 'dashboard:ngo_dashboard' %}" class="hover:text-emerald-600 font-semibold text-emerald-600 transition">NGO Dashboard</a>
                     {% elif user.is_client_user %}
-                        <a href="{% url 'dashboard:client_dashboard' %}" class="hover:text-emerald-400 transition">Client Panel</a>
+                        <a href="{% url 'dashboard:client_dashboard' %}" class="hover:text-emerald-600 font-semibold text-sky-600 transition">Client Panel</a>
                     {% elif user.is_worker_user %}
-                        <a href="{% url 'dashboard:worker_dashboard' %}" class="hover:text-emerald-400 transition">My Profile</a>
+                        <a href="{% url 'dashboard:worker_dashboard' %}" class="hover:text-emerald-600 font-semibold text-orange-600 transition">My Profile</a>
                     {% endif %}
                     
-                    <span class="text-slate-400 text-sm">Hello, <strong class="text-slate-200">{{ user.username }}</strong> ({{ user.get_role_display }})</span>
+                    <span class="text-slate-500 text-sm hidden md:inline">Hello, <strong class="text-slate-800">{{ user.username }}</strong> <span class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded ml-1">{{ user.get_role_display }}</span></span>
                     <form action="{% url 'logout' %}" method="post" class="inline">
                         {% csrf_token %}
-                        <button type="submit" class="bg-red-500/20 border border-red-500/30 text-red-300 px-4 py-1.5 rounded-lg hover:bg-red-500/30 transition text-sm">Logout</button>
+                        <button type="submit" class="bg-red-50 border border-red-200 text-red-600 px-4 py-1.5 rounded-lg hover:bg-red-100 transition text-sm font-medium">Logout</button>
                     </form>
                 {% else %}
-                    <a href="{% url 'login' %}" class="text-slate-300 hover:text-white transition">Login</a>
-                    <a href="{% url 'register' %}" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-4 py-2 rounded-lg font-semibold transition text-sm">Get Started</a>
+                    <a href="{% url 'login' %}" class="text-slate-600 hover:text-slate-900 font-medium transition">Login</a>
+                    <a href="{% url 'register' %}" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-bold transition text-sm shadow-md shadow-emerald-600/10">Get Started</a>
                 {% endif %}
             </div>
         </div>
@@ -65,9 +65,9 @@
     {% if messages %}
     <div class="max-w-3xl mx-auto mt-4 px-4 w-full">
         {% for message in messages %}
-        <div class="p-4 rounded-lg border {% if message.tags == 'error' %}bg-red-950/50 border-red-500/30 text-red-200{% else %}bg-emerald-950/50 border-emerald-500/30 text-emerald-200{% endif %} flex justify-between items-center shadow-lg" x-data="{ show: true }" x-show="show" x-transition>
-            <span>{{ message }}</span>
-            <button @click="show = false" class="text-slate-400 hover:text-white font-bold">&times;</button>
+        <div class="p-4 rounded-lg border {% if message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% else %}bg-emerald-50 border-emerald-200 text-emerald-800{% endif %} flex justify-between items-center shadow-md" x-data="{ show: true }" x-show="show" x-transition>
+            <span class="font-medium">{{ message }}</span>
+            <button @click="show = false" class="text-slate-400 hover:text-slate-600 font-bold text-lg leading-none">&times;</button>
         </div>
         {% endfor %}
     </div>
@@ -79,7 +79,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-slate-500 text-sm mt-auto">
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-slate-400 text-sm mt-auto">
         <div class="max-w-7xl mx-auto px-6">
             <p>&copy; {% now "Y" %} KRIYA NGO Platform. All rights reserved.</p>
         </div>

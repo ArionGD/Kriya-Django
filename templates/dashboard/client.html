@@ -5,29 +5,29 @@
 {% block content %}
 <div class="space-y-8">
     <!-- Header -->
-    <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+    <div class="flex justify-between items-center border-b border-slate-200 pb-4">
         <div>
-            <h1 class="text-3xl font-black text-white">Client Console</h1>
-            <p class="text-slate-400 text-sm mt-1">Submit staffing requirements and monitor active deployments</p>
+            <h1 class="text-3xl font-black text-slate-900">Client Console</h1>
+            <p class="text-slate-500 text-sm mt-1">Submit staffing requirements and monitor active deployments</p>
         </div>
-        <button class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 px-4 py-2 rounded-lg font-semibold transition text-sm">Post New Job Requirement</button>
+        <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold transition text-sm shadow-sm cursor-pointer">Post New Job Requirement</button>
     </div>
 
     <!-- Quick Metrics -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl relative overflow-hidden">
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-wider">Active Requests</p>
-            <h3 class="text-3xl font-black text-white mt-2">{{ active_requests }}</h3>
+        <div class="bg-white border border-slate-200 p-6 rounded-xl relative overflow-hidden shadow-sm">
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Active Requests</p>
+            <h3 class="text-3xl font-black text-slate-900 mt-2">{{ active_requests }}</h3>
         </div>
 
-        <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl relative overflow-hidden">
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-wider">Fulfilled Jobs</p>
-            <h3 class="text-3xl font-black text-emerald-400 mt-2">{{ fulfilled_requests }}</h3>
+        <div class="bg-white border border-slate-200 p-6 rounded-xl relative overflow-hidden shadow-sm">
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Fulfilled Jobs</p>
+            <h3 class="text-3xl font-black text-emerald-600 mt-2">{{ fulfilled_requests }}</h3>
         </div>
 
-        <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl relative overflow-hidden">
-            <p class="text-slate-500 text-xs font-bold uppercase tracking-wider">Currently Deployed Staff</p>
-            <h3 class="text-3xl font-black text-white mt-2">{{ deployed_count }}</h3>
+        <div class="bg-white border border-slate-200 p-6 rounded-xl relative overflow-hidden shadow-sm">
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Currently Deployed Staff</p>
+            <h3 class="text-3xl font-black text-sky-600 mt-2">{{ deployed_count }}</h3>
         </div>
     </div>
 
@@ -35,25 +35,25 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Active Requirements -->
         <div class="space-y-4">
-            <h2 class="text-xl font-bold text-white">My Active Requirements</h2>
-            <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-800">
+            <h2 class="text-xl font-bold text-slate-900">My Active Requirements</h2>
+            <div class="bg-white border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-100 shadow-sm">
                 <div class="p-6">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h4 class="font-bold text-slate-200">Plumbers (3 Workers)</h4>
-                            <p class="text-slate-400 text-sm mt-1">Daily Wage: ₹750/day • Location: Chennai Central</p>
+                            <h4 class="font-bold text-slate-800">Plumbers (3 Workers)</h4>
+                            <p class="text-slate-500 text-sm mt-1">Daily Wage: ₹750/day • Location: Chennai Central</p>
                         </div>
-                        <span class="bg-yellow-500/10 text-yellow-400 text-xs px-2.5 py-1 rounded border border-yellow-500/20 font-semibold">Matching Queue</span>
+                        <span class="bg-orange-50 text-orange-700 text-xs px-2.5 py-1 rounded border border-orange-100 font-semibold">Matching Queue</span>
                     </div>
                 </div>
 
                 <div class="p-6">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h4 class="font-bold text-slate-200">Electricians (2 Workers)</h4>
-                            <p class="text-slate-400 text-sm mt-1">Daily Wage: ₹900/day • Location: Chennai North</p>
+                            <h4 class="font-bold text-slate-800">Electricians (2 Workers)</h4>
+                            <p class="text-slate-500 text-sm mt-1">Daily Wage: ₹900/day • Location: Chennai North</p>
                         </div>
-                        <span class="bg-emerald-500/10 text-emerald-400 text-xs px-2.5 py-1 rounded border border-emerald-500/20 font-semibold">Fulfilled</span>
+                        <span class="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-1 rounded border border-emerald-100 font-semibold">Fulfilled</span>
                     </div>
                 </div>
             </div>
@@ -61,17 +61,19 @@
 
         <!-- Vetting Badge / Verification -->
         <div class="space-y-4">
-            <h2 class="text-xl font-bold text-white">NGO Verification Status</h2>
-            <div class="bg-slate-950 border border-slate-800 p-6 rounded-xl space-y-4">
+            <h2 class="text-xl font-bold text-slate-900">NGO Verification Status</h2>
+            <div class="bg-white border border-slate-200 p-6 rounded-xl space-y-4 shadow-sm">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-emerald-500/10 text-emerald-400 rounded-lg flex items-center justify-center font-bold text-2xl">✓</div>
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center font-bold text-2xl border border-emerald-100">✓</div>
                     <div>
-                        <h4 class="font-bold text-slate-200">Corporate Vetting Approved</h4>
+                        <h4 class="font-bold text-slate-800">Corporate Vetting Approved</h4>
                         <p class="text-slate-500 text-xs mt-0.5">Your organization complies with KRIYA's safety & minimum wage guidelines.</p>
                     </div>
                 </div>
-                <div class="border-t border-slate-800 pt-4">
-                    <p class="text-slate-400 text-sm">Thank you for committing to providing safe, fair environments for our workers. In case of any dispute or emergency, contact the NGO command center directly.</p>
+                <div class="border-t border-slate-100 pt-4">
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Thank you for committing to providing safe, fair environments for our workers. In case of any dispute or emergency, contact the NGO command center directly.
+                    </p>
                 </div>
             </div>
         </div>
