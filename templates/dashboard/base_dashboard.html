@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard | Kriya{% endblock %}</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (V4 Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body hx-boost="true" x-data="{ mobileSidebarOpen: false, sidebarCollapsed: localStorage.getItem('sidebarCollapsed') === 'true' }" class="min-h-screen flex flex-col font-sans antialiased overflow-x-hidden">
+
+    <!-- Top Header -->
+    {% include 'dashboard/header.html' %}
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div x-show="mobileSidebarOpen" x-cloak 
+         @click="mobileSidebarOpen = false" 
+         class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-20 md:hidden"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         style="display: none;"></div>
+
+    <!-- Main Layout Wrapper -->
+    <div class="flex-1 flex flex-col md:flex-row relative">
+        
+        <!-- Left: Sidebar -->
+        {% block sidebar %}
+            {% if user.is_manager_user %}
+                {% include 'manager/sidebar.html' %}
+            {% elif user.is_client_user %}
+                {% include 'client/sidebar.html' %}
+            {% elif user.is_worker_user %}
+                {% include 'worker/sidebar.html' %}
+            {% endif %}
+        {% endblock %}
+
+        <!-- Right: Main Content Area -->
+        <main id="main-content" :class="sidebarCollapsed ? 'md:pl-20' : 'md:pl-64'" class="flex-1 flex flex-col min-w-0 bg-slate-50 transition-all duration-300 smooth-width">
+            <script>
+                (function() {
+                    const collapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+                    const main = document.getElementById('main-content');
+                    if (collapsed) {
+                        main.classList.add('md:pl-20');
+                    } else {
+                        main.classList.add('md:pl-64');
+                    }
+                })();
+            </script>
+            
+            <div class="flex-1 flex flex-col p-6 md:p-10">
+                <!-- Django messages inside dashboard -->
+                {% if messages %}
+                <div class="mb-6">
+                    {% for message in messages %}
+                    <div class="p-4 rounded-lg border {% if message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% else %}bg-blue-50 border-blue-200 text-blue-800{% endif %} flex justify-between items-center shadow-sm" x-data="{ show: true }" x-show="show" x-transition>
+                        <span class="font-medium">{{ message }}</span>
+                        <button @click="show = false" class="text-slate-400 hover:text-slate-600 font-bold text-lg leading-none">&times;</button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        function initIcons() {
+            lucide.createIcons();
+        }
+        document.addEventListener('DOMContentLoaded', initIcons);
+        document.addEventListener('htmx:afterSwap', initIcons);
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
