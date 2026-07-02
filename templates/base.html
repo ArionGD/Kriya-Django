@@ -90,8 +90,8 @@
             </div> 
             
             <!-- Center: Sliding Nav Menu --> 
-            <div class="hidden md:flex flex-1 justify-center">
-                <nav class="flex items-center gap-1 relative bg-slate-100/60 p-1.5 rounded-full border border-slate-200/40 select-none"> 
+            <div class="hidden md:flex flex-1 justify-center min-w-0">
+                <nav class="flex items-center gap-1 relative bg-slate-100/60 p-1.5 rounded-full border border-slate-200/40 select-none shrink-0"> 
                     
                     <!-- Sliding Highlight Pill -->
                     <div class="absolute top-1.5 bottom-1.5 bg-white border border-slate-200/60 rounded-full shadow-sm transition-all duration-300 ease-out z-0"
@@ -102,7 +102,7 @@
                     <a data-tab="home"
                        href="{% url 'core:home' %}" 
                        @click="activeTab = 'home'; updatePill()"
-                       class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300"
+                       class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 whitespace-nowrap"
                        :class="activeTab === 'home' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-900'"> 
                         <i data-lucide="home" class="w-4 h-4"></i>
                         Home
@@ -112,7 +112,7 @@
                     <a data-tab="program"
                        href="{% url 'core:program' %}" 
                        @click="activeTab = 'program'; updatePill()"
-                       class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300"
+                       class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 whitespace-nowrap"
                        :class="activeTab === 'program' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-900'"> 
                         <i data-lucide="sparkles" class="w-4 h-4"></i>
                         Skill Grid
@@ -122,7 +122,7 @@
                     <a data-tab="support"
                        href="{% url 'core:support' %}" 
                        @click="activeTab = 'support'; updatePill()"
-                       class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300"
+                       class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 whitespace-nowrap"
                        :class="activeTab === 'support' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-900'"> 
                         <i data-lucide="headphones" class="w-4 h-4"></i>
                         Support
@@ -131,23 +131,23 @@
                     <!-- Dashboard Tab (Conditional Routing) -->
                     {% if user.is_authenticated %}
                         {% if user.is_manager_user %}
-                            <a href="{% url 'manager:dashboard' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900"> 
+                            <a href="{% url 'manager:dashboard' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900 whitespace-nowrap"> 
                                 <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                                 Console
                             </a> 
                         {% elif user.is_client_user %}
-                            <a href="{% url 'client:dashboard' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900"> 
+                            <a href="{% url 'client:dashboard' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900 whitespace-nowrap"> 
                                 <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                                 Console
                             </a> 
                         {% elif user.is_worker_user %}
-                            <a href="{% url 'worker:dashboard' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900"> 
+                            <a href="{% url 'worker:dashboard' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900 whitespace-nowrap"> 
                                 <i data-lucide="user" class="w-4 h-4"></i>
                                 Portal
                             </a> 
                         {% endif %}
                     {% else %}
-                        <a href="{% url 'login' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900"> 
+                        <a href="{% url 'login' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900 whitespace-nowrap"> 
                             <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                             Console
                         </a>
