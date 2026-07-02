@@ -8,10 +8,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Theme Initializer (Avoid Flashing Light Mode on Dark Settings) -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            window.dispatchEvent(new Event('theme-changed'));
+        }
+    </script>
     <!-- Tailwind CSS (V4 Play CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -34,6 +53,11 @@
         body {
             background-color: #f8fafc;
             color: #0f172a;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dark body {
+            background-color: #0f172a;
+            color: #f8fafc;
         }
         ::-webkit-scrollbar {
             width: 6px;
@@ -42,9 +66,15 @@
         ::-webkit-scrollbar-track {
             background: #f1f5f9;
         }
+        .dark ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
         ::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #2563eb;
@@ -52,7 +82,7 @@
     </style>
     {% block extra_head %}{% endblock %}
 </head>
-<body hx-boost="true" x-data="{ mobileSidebarOpen: false, sidebarCollapsed: localStorage.getItem('sidebarCollapsed') === 'true' }" class="min-h-screen flex flex-col font-sans antialiased overflow-x-hidden">
+<body hx-boost="true" x-data="{ mobileSidebarOpen: false, sidebarCollapsed: localStorage.getItem('sidebarCollapsed') === 'true' }" class="min-h-screen flex flex-col font-sans antialiased overflow-x-hidden bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300">
 
     <!-- Top Header -->
     {% include 'dashboard/header.html' %}
@@ -60,7 +90,7 @@
     <!-- Mobile Sidebar Backdrop Overlay -->
     <div x-show="mobileSidebarOpen" x-cloak 
          @click="mobileSidebarOpen = false" 
-         class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-20 md:hidden"
+         class="fixed inset-0 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-xs z-20 md:hidden"
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
@@ -84,7 +114,7 @@
         {% endblock %}
 
         <!-- Right: Main Content Area -->
-        <main id="main-content" :class="sidebarCollapsed ? 'md:pl-20' : 'md:pl-64'" class="flex-1 flex flex-col min-w-0 bg-slate-50 transition-all duration-300 smooth-width">
+        <main id="main-content" :class="sidebarCollapsed ? 'md:pl-20' : 'md:pl-64'" class="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-900 transition-all duration-300 smooth-width">
             <script>
                 (function() {
                     const collapsed = localStorage.getItem('sidebarCollapsed') === 'true';
@@ -102,9 +132,9 @@
                 {% if messages %}
                 <div class="mb-6">
                     {% for message in messages %}
-                    <div class="p-4 rounded-lg border {% if message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% else %}bg-blue-50 border-blue-200 text-blue-800{% endif %} flex justify-between items-center shadow-sm" x-data="{ show: true }" x-show="show" x-transition>
-                        <span class="font-medium">{{ message }}</span>
-                        <button @click="show = false" class="text-slate-400 hover:text-slate-600 font-bold text-lg leading-none">&times;</button>
+                    <div class="p-4 rounded-lg border {% if message.tags == 'error' %}bg-red-50 border-red-200 text-red-800 dark:bg-rose-950/20 dark:border-rose-900/30 dark:text-rose-400{% else %}bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-950/20 dark:border-blue-900/30 dark:text-blue-400{% endif %} flex justify-between items-center shadow-sm" x-data="{ show: true }" x-show="show" x-transition>
+                        <span class="font-medium text-sm">{{ message }}</span>
+                        <button @click="show = false" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-350 font-bold text-lg leading-none">&times;</button>
                     </div>
                     {% endfor %}
                 </div>
