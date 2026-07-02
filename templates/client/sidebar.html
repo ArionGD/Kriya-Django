@@ -3,9 +3,9 @@
            mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full',
            sidebarCollapsed ? 'md:w-20' : 'md:w-64'
        ]"
-       class="fixed top-16 left-0 h-[calc(100vh-4rem)] bg-white border-r border-slate-200 flex flex-col shrink-0 z-30 md:z-10 transition-all duration-300 md:translate-x-0 smooth-width">
+       class="fixed top-16 left-0 h-[calc(100vh-4rem)] bg-white border-r border-slate-200 flex flex-col shrink-0 z-30 md:z-10 transition-all duration-300 md:translate-x-0 smooth-width overscroll-none" style="overscroll-behavior: none;">
 
-    <div class="flex-1 flex flex-col justify-between py-4 overflow-y-auto">
+    <div class="flex-1 flex flex-col justify-between py-4 overflow-y-auto overscroll-none" style="overscroll-behavior: none;">
         <nav class="space-y-1.5 px-4">
             <div x-show="!sidebarCollapsed" class="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                 Employer Hub
