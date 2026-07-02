@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}User Guide &amp; Docs — Kriya{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl w-full mx-auto space-y-12 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="border-b border-slate-200 pb-4">
+        <h1 class="text-3xl font-black text-slate-900">User Guides &amp; Documentation</h1>
+        <p class="text-slate-500 text-sm mt-1">Read guides on registering as an employee or auditing your business as an employer.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Employee Help Guide -->
+        <div class="space-y-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
+                    <i data-lucide="user-check" class="w-5 h-5"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">Employee / Candidate Guide</h3>
+            </div>
+            <div class="bg-white border border-slate-200 p-6 rounded-xl space-y-3 shadow-sm text-sm">
+                <h4 class="font-bold text-slate-800">1. Create Your Profile</h4>
+                <p class="text-slate-500 leading-relaxed text-xs">
+                    Sign up selecting the "Employee" role and add your phone number. This is where NGO coordinators will contact you.
+                </p>
+                <h4 class="font-bold text-slate-800">2. Complete Training Courses</h4>
+                <p class="text-slate-500 leading-relaxed text-xs">
+                    Your account will stay in "Training" status. Attend core skilling sessions held at the NGO center to receive placement certificates.
+                </p>
+                <h4 class="font-bold text-slate-800">3. Active Placements</h4>
+                <p class="text-slate-500 leading-relaxed text-xs">
+                    Once certified, the Kriya engine matches you to compliant sites. Log your daily attendance using the "Check-In" console buttons.
+                </p>
+            </div>
+        </div>
+
+        <!-- Employer Help Guide -->
+        <div class="space-y-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
+                    <i data-lucide="building-2" class="w-5 h-5"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">Employer / Recruiter Guide</h3>
+            </div>
+            <div class="bg-white border border-slate-200 p-6 rounded-xl space-y-3 shadow-sm text-sm">
+                <h4 class="font-bold text-slate-800">1. Setup Organization Vetting</h4>
+                <p class="text-slate-500 leading-relaxed text-xs">
+                    Register selecting the "Employer" role. NGO coordinators will schedule site visits to audit basic facilities, minimum wages, and housing.
+                </p>
+                <h4 class="font-bold text-slate-800">2. Submit staffing Requirements</h4>
+                <p class="text-slate-500 leading-relaxed text-xs">
+                    Use your console to post new requirements. Enter daily wages, locations, and safety details to trigger database searches.
+                </p>
+                <h4 class="font-bold text-slate-800">3. Placement Audits</h4>
+                <p class="text-slate-500 leading-relaxed text-xs">
+                    Track the dispatched employees deployed at your sites, confirm payroll dispersals, and report disputes instantly.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

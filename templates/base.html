@@ -4,14 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Kriya — Professional Skill Grid Platform{% endblock %}</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Tailwind CSS (V4 Play CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Custom scrollbar and subtle transitions */
+        [x-cloak] {
+            display: none !important;
+        }
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -23,101 +46,253 @@
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            background: #2563eb;
         }
     </style>
+    {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
-    
-    <!-- Navbar -->
-    <nav class="bg-white/80 backdrop-blur-md border-b border-slate-200/50 py-4 px-6 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="{% url 'home' %}" class="flex items-center space-x-2 text-2xl font-black tracking-wide text-slate-950">
-                <span class="text-blue-600">Kriya</span>
-            </a>
+<body hx-boost="true" class="min-h-screen flex flex-col font-sans antialiased overflow-x-hidden transition-colors duration-300">
+
+    <!-- Floating Header -->
+    <header id="main-header" class="fixed top-0 z-50 w-full py-0"> 
+        <div id="nav-container" 
+             x-data="{ 
+                 activeTab: window.location.pathname.includes('/features') ? 'features' : (window.location.pathname.includes('/support') ? 'support' : (window.location.pathname.includes('/help') ? 'help' : 'home')),
+                 pillWidth: 0,
+                 pillLeft: 0,
+                 updatePill() {
+                     this.$nextTick(() => {
+                         const activeEl = this.$el.querySelector('[data-tab=' + this.activeTab + ']');
+                         if (activeEl) {
+                             this.pillWidth = activeEl.offsetWidth;
+                             this.pillLeft = activeEl.offsetLeft;
+                         } else {
+                             this.pillWidth = 0;
+                             this.pillLeft = 0;
+                         }
+                     });
+                 }
+             }" 
+             x-init="updatePill()"
+             @htmx:after-swap.window="activeTab = window.location.pathname.includes('/features') ? 'features' : (window.location.pathname.includes('/support') ? 'support' : (window.location.pathname.includes('/help') ? 'help' : 'home')); updatePill()"
+             class="mx-auto w-full max-w-full bg-white/80 border-b border-slate-200/55 shadow-sm backdrop-blur-md px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between"> 
             
-            <div class="flex items-center space-x-6">
-                <a href="{% url 'home' %}" class="hover:text-blue-600 font-medium text-slate-600 transition">Home</a>
-                
+            <!-- Left: Logo --> 
+            <div class="flex-1 flex items-center justify-start gap-3"> 
+                <a href="{% url 'core:home' %}" class="flex items-center gap-2 group"> 
+                    <div class="h-8 w-8 rounded-lg bg-gradient-to-tr from-blue-600 to-sky-500 flex items-center justify-center text-white border border-slate-100/10 shadow-md shadow-blue-600/10">
+                        <i data-lucide="orbit" class="w-5 h-5 text-white"></i>
+                    </div> 
+                    <span class="font-outfit text-xl font-bold tracking-wide text-blue-600 group-hover:text-blue-800 transition-colors">
+                        Kriya
+                    </span> 
+                </a> 
+            </div> 
+            
+            <!-- Center: Sliding Nav Menu --> 
+            <div class="hidden md:flex flex-1 justify-center">
+                <nav class="flex items-center gap-1 relative bg-slate-100/60 p-1.5 rounded-full border border-slate-200/40 select-none"> 
+                    
+                    <!-- Sliding Highlight Pill -->
+                    <div class="absolute top-1.5 bottom-1.5 bg-white border border-slate-200/60 rounded-full shadow-sm transition-all duration-300 ease-out z-0"
+                         :style="{ left: pillLeft + 'px', width: pillWidth + 'px', opacity: pillWidth ? 1 : 0 }">
+                    </div>
+
+                    <!-- Home Tab -->
+                    <a data-tab="home"
+                       href="{% url 'core:home' %}" 
+                       @click="activeTab = 'home'; updatePill()"
+                       class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300"
+                       :class="activeTab === 'home' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-900'"> 
+                        <i data-lucide="home" class="w-4 h-4"></i>
+                        Home
+                    </a> 
+
+                    <!-- Features Tab -->
+                    <a data-tab="features"
+                       href="{% url 'core:features' %}" 
+                       @click="activeTab = 'features'; updatePill()"
+                       class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300"
+                       :class="activeTab === 'features' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-900'"> 
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        Features
+                    </a> 
+
+                    <!-- Support Tab -->
+                    <a data-tab="support"
+                       href="{% url 'core:support' %}" 
+                       @click="activeTab = 'support'; updatePill()"
+                       class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300"
+                       :class="activeTab === 'support' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-900'"> 
+                        <i data-lucide="headphones" class="w-4 h-4"></i>
+                        Support
+                    </a> 
+
+                    <!-- Dashboard Tab (Conditional Routing) -->
+                    {% if user.is_authenticated %}
+                        {% if user.is_manager_user %}
+                            <a href="{% url 'manager:dashboard' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900"> 
+                                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                                Console
+                            </a> 
+                        {% elif user.is_client_user %}
+                            <a href="{% url 'client:dashboard' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900"> 
+                                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                                Console
+                            </a> 
+                        {% elif user.is_worker_user %}
+                            <a href="{% url 'worker:dashboard' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900"> 
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                                Portal
+                            </a> 
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}" hx-boost="false" class="relative z-10 flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-500 hover:text-slate-900"> 
+                            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                            Console
+                        </a>
+                    {% endif %} 
+                </nav> 
+            </div>
+            
+            <!-- Right: Actions --> 
+            <div class="flex-1 flex items-center justify-end gap-4">
+                <!-- Help Icon Button -->
+                <a href="{% url 'core:help_guide' %}" 
+                   @click="activeTab = 'help'; updatePill()"
+                   class="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-500 hover:text-slate-800 hover:scale-105 transition-all duration-200 focus:outline-none cursor-pointer" 
+                   title="Help &amp; Guides"> 
+                    <i data-lucide="help-circle" class="w-4 h-4"></i>
+                </a>
+
                 {% if user.is_authenticated %}
                     {% if user.is_manager_user %}
-                        <a href="{% url 'manager:dashboard' %}" class="hover:text-blue-600 font-semibold text-blue-600 transition">NGO Dashboard</a>
+                        <a href="{% url 'manager:dashboard' %}" hx-boost="false" class="inline-flex items-center rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 text-xs font-bold transition-all shadow-md shadow-blue-600/10 cursor-pointer">
+                            NGO Console
+                        </a>
                     {% elif user.is_client_user %}
-                        <a href="{% url 'client:dashboard' %}" class="hover:text-blue-600 font-semibold text-sky-600 transition">Client Panel</a>
+                        <a href="{% url 'client:dashboard' %}" hx-boost="false" class="inline-flex items-center rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 text-xs font-bold transition-all shadow-md shadow-blue-600/10 cursor-pointer">
+                            Employer Console
+                        </a>
                     {% elif user.is_worker_user %}
-                        <a href="{% url 'worker:dashboard' %}" class="hover:text-blue-600 font-semibold text-blue-600 transition">My Profile</a>
+                        <a href="{% url 'worker:dashboard' %}" hx-boost="false" class="inline-flex items-center rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 text-xs font-bold transition-all shadow-md shadow-blue-600/10 cursor-pointer">
+                            Employee Portal
+                        </a>
                     {% endif %}
-                    
-                    <span class="text-slate-500 text-sm hidden md:inline">Hello, <strong class="text-slate-800">{{ user.username }}</strong> <span class="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded ml-1">{{ user.get_role_display }}</span></span>
-                    <form action="{% url 'logout' %}" method="post" class="inline">
-                        {% csrf_token %}
-                        <button type="submit" class="bg-red-50 border border-red-200 text-red-600 px-4 py-1.5 rounded-lg hover:bg-red-100 transition text-sm font-medium cursor-pointer">Logout</button>
-                    </form>
                 {% else %}
-                    <a href="{% url 'login' %}" class="text-slate-600 hover:text-slate-900 font-medium transition">Login</a>
-                    <a href="{% url 'register' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold transition text-sm shadow-md shadow-blue-600/10 cursor-pointer">Get Started</a>
+                    <a href="{% url 'login' %}" hx-boost="false" class="inline-flex items-center rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 text-xs font-bold transition-all shadow-md shadow-blue-600/10 cursor-pointer">
+                        Sign In
+                    </a>
                 {% endif %}
-            </div>
-        </div>
-    </nav>
+            </div> 
+        </div> 
+    </header>
 
     <!-- Message Alerts -->
     {% if messages %}
-    <div class="max-w-3xl mx-auto mt-4 px-4 w-full">
+    <div class="max-w-4xl mx-auto mt-24 px-6 w-full">
         {% for message in messages %}
-        <div class="p-4 rounded-lg border {% if message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% else %}bg-blue-50 border-blue-200 text-blue-800{% endif %} flex justify-between items-center shadow-md" x-data="{ show: true }" x-show="show" x-transition>
-            <span class="font-medium">{{ message }}</span>
+        <div class="p-4 rounded-xl border {% if message.tags == 'error' %}bg-rose-50 border-rose-200 text-rose-800{% else %}bg-blue-50 border-blue-200 text-blue-800{% endif %} flex justify-between items-center shadow-sm" x-data="{ show: true }" x-show="show" x-transition>
+            <span class="font-medium text-sm">{{ message }}</span>
             <button @click="show = false" class="text-slate-400 hover:text-slate-600 font-bold text-lg leading-none">&times;</button>
         </div>
         {% endfor %}
     </div>
     {% endif %}
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-7xl w-full mx-auto p-6">
+    <!-- Main Content Area -->
+    <main class="flex-grow pt-24 pb-16">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-auto shadow-inner py-12">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="space-y-4">
-                <a href="{% url 'home' %}" class="flex items-center space-x-2 text-2xl font-black tracking-wide text-slate-950">
-                    <span class="text-blue-600">Kriya</span>
-                </a>
-                <p class="text-slate-500 text-sm leading-relaxed">
-                    A secure, high-efficiency inbound demand-supply coordinator designed to bridge organizations with verified, trained blue-collar workers.
-                </p>
-            </div>
-            <div>
-                <h4 class="text-slate-900 font-bold text-sm uppercase tracking-wider mb-4">Quick Links</h4>
-                <ul class="space-y-2 text-sm text-slate-500">
-                    <li><a href="{% url 'home' %}" class="hover:text-blue-600 transition">Home</a></li>
-                    <li><a href="{% url 'register' %}" class="hover:text-blue-600 transition">Join Roster</a></li>
-                    <li><a href="{% url 'login' %}" class="hover:text-blue-600 transition">Employer Login</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-slate-900 font-bold text-sm uppercase tracking-wider mb-4">Platform</h4>
-                <ul class="space-y-2 text-sm text-slate-500">
-                    <li><a href="#" class="hover:text-blue-600 transition">Skill Grid Program</a></li>
-                    <li><a href="#" class="hover:text-blue-600 transition">Safety Vetting</a></li>
-                    <li><a href="#" class="hover:text-blue-600 transition">NGO Mediator</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-slate-900 font-bold text-sm uppercase tracking-wider mb-4">Contact</h4>
-                <ul class="space-y-2 text-sm text-slate-500">
-                    <li>Email: info@kriya-grid.org</li>
-                    <li>Location: Chennai, India</li>
-                    <li class="pt-2"><span class="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded border border-blue-100 font-semibold uppercase tracking-wider">Skill Grid</span></li>
-                </ul>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto px-6 border-t border-slate-100 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-slate-400 text-sm">
-            <p>&copy; {% now "Y" %} Kriya Platform. All rights reserved.</p>
-            <p class="mt-2 md:mt-0">Administered by Kriya Professional Skill Grid</p>
-        </div>
+    <!-- Detailed Premium Footer -->
+    <footer class="border-t border-slate-200 bg-white pt-16 pb-8 text-slate-600 shadow-inner"> 
+        <div class="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16"> 
+            <div class="grid grid-cols-1 gap-12 lg:grid-cols-3">
+                
+                <!-- Left Column: Brand & Mission --> 
+                <div class="flex flex-col gap-4"> 
+                    <div class="flex items-center gap-2.5"> 
+                        <div class="h-7 w-7 rounded-md bg-gradient-to-tr from-blue-600 to-sky-500 flex items-center justify-center text-white">
+                            <i data-lucide="orbit" class="w-4 h-4"></i>
+                        </div>
+                        <span class="font-outfit text-xl font-bold tracking-wide text-blue-600">
+                            Kriya
+                        </span> 
+                    </div> 
+                    <div> 
+                        <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-[10px] font-bold text-blue-600 ring-1 ring-inset ring-blue-500/20">
+                            SEA Movement Skill Grid
+                        </span> 
+                    </div> 
+                    <p class="text-xs text-slate-500 leading-relaxed max-w-sm">
+                        A professional inbound demand-supply matching platform designed to coordinate skilling certifications and place verified employees at compliant worksites.
+                    </p> 
+                </div> 
+                
+                <!-- Center Column: Stay Updated/Newsletter --> 
+                <div class="flex flex-col gap-4 lg:items-center"> 
+                    <div class="w-full max-w-sm"> 
+                        <h4 class="font-outfit text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Newsletter</h4> 
+                        <p class="text-xs text-slate-450 leading-relaxed mb-4">Stay informed on skilling workshops and platform statistics.</p> 
+                        <form class="flex gap-2 w-full" onsubmit="event.preventDefault(); alert('Subscribed to Kriya skilling updates!');"> 
+                            <input type="email" placeholder="Enter coordinator email" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-xs bg-slate-50 focus:border-blue-500 focus:outline-none shadow-sm transition-all placeholder-slate-400 text-slate-800" required> 
+                            <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-blue-700 transition-all shadow-sm shrink-0 cursor-pointer">Subscribe</button> 
+                        </form> 
+                    </div> 
+                </div> 
+                
+                <!-- Right Column: Navigation Links --> 
+                <div class="flex flex-col gap-4 lg:items-end"> 
+                    <div class="w-full lg:max-w-xs"> 
+                        <h4 class="font-outfit text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Quick Links</h4> 
+                        <ul class="space-y-3 text-xs font-semibold text-slate-500 flex flex-col lg:items-start pl-4 pt-2"> 
+                            <li> 
+                                <a href="{% url 'core:home' %}" class="group flex items-center gap-2 hover:text-blue-600 transition-colors duration-200"> 
+                                    <i data-lucide="home" class="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                    Landing Home
+                                </a> 
+                            </li> 
+                            <li> 
+                                <a href="{% url 'core:features' %}" class="group flex items-center gap-2 hover:text-blue-600 transition-colors duration-200"> 
+                                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                    Grid Features
+                                </a> 
+                            </li> 
+                            <li> 
+                                <a href="{% url 'core:support' %}" class="group flex items-center gap-2 hover:text-blue-600 transition-colors duration-200"> 
+                                    <i data-lucide="headphones" class="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                    Support Desk
+                                </a> 
+                            </li> 
+                            <li> 
+                                <a href="{% url 'core:help_guide' %}" class="group flex items-center gap-2 hover:text-blue-600 transition-colors duration-200"> 
+                                    <i data-lucide="book-open" class="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
+                                    Employee &amp; Employer Docs
+                                </a> 
+                            </li> 
+                        </ul> 
+                    </div> 
+                </div>  
+                
+            </div> 
+            
+            <!-- Bottom Partition --> 
+            <hr class="border-slate-200 mt-8 mb-4"> 
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left text-[11px] text-slate-400"> 
+                <p>© 2026 Kriya Skill Grid Platform. All rights reserved.</p> 
+                <p>Administered by SEA Movement • Chennai Placement Center • Status: Operational</p> 
+            </div> 
+        </div> 
     </footer>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        function initIcons() {
+            lucide.createIcons();
+        }
+        document.addEventListener('DOMContentLoaded', initIcons);
+        document.addEventListener('htmx:afterSwap', initIcons);
+    </script>
 </body>
 </html>
