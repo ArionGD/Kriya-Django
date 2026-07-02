@@ -30,10 +30,14 @@ This guide provides simple, step-by-step instructions to host Project Kriya on *
 
 1. While inside the `Kriya-Django` folder in the console, create a Python virtual environment:
    ```bash
-   mkvirtualenv --python=/usr/bin/python3.10 kriya-venv
+   python3 -m venv ~/.virtualenvs/kriya-venv
    ```
-   *(This will automatically activate the virtual environment. You will see `(kriya-venv)` prefixing your console prompt).*
-2. Install the required libraries:
+2. Activate the virtual environment:
+   ```bash
+   source ~/.virtualenvs/kriya-venv/bin/activate
+   ```
+   *(You will see `(kriya-venv)` prefixing your console prompt).*
+3. Install the required libraries:
    ```bash
    pip install -r requirements.txt
    ```
