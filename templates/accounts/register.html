@@ -1,91 +1,321 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Kriya</title>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    keyframes: {
+                        breathe: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.08)' }
+                        },
+                        spinReverse: {
+                            'to': { transform: 'rotate(-360deg)' }
+                        }
+                    },
+                    animation: {
+                        breathe: 'breathe 4s ease-in-out infinite',
+                        'orbit-inner': 'spin 20s linear infinite',
+                        'orbit-inner-reverse': 'spinReverse 20s linear infinite',
+                        'orbit-middle': 'spin 30s linear infinite',
+                        'orbit-middle-reverse': 'spinReverse 30s linear infinite',
+                        'orbit-outer': 'spin 40s linear infinite',
+                        'orbit-outer-reverse': 'spinReverse 40s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body hx-boost="true" class="min-h-screen flex flex-col font-sans antialiased overflow-x-hidden select-none">
 
-{% block title %}Register — Kriya{% endblock %}
-
-{% block content %}
-<div class="max-w-3xl w-full mx-auto my-6 bg-white border border-slate-200 p-8 rounded-xl shadow-xl">
-    <div class="text-center mb-6">
-        <h2 class="text-3xl font-black text-slate-950">Create Account</h2>
-        <p class="text-slate-500 text-sm mt-2">Join Kriya to start employee matching or roster listing</p>
-    </div>
-
-    <form method="post" class="space-y-6">
-        {% csrf_token %}
+    <!-- Container Grid -->
+    <div class="flex-1 flex flex-col md:flex-row min-h-screen">
         
-        <!-- Row 1: Username & Email -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <label for="id_username" class="block text-sm font-semibold text-slate-700 mb-1">Username</label>
-                <input type="text" name="username" id="id_username" required
-                       class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-500 transition shadow-sm">
-                {% if form.username.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.username.errors.0 }}</p>
-                {% endif %}
+        <!-- LEFT HALF: Registration Fields -->
+        <div class="w-full md:w-1/2 bg-white flex flex-col justify-between p-8 sm:p-12 border-b md:border-b-0 md:border-r border-slate-200 shrink-0">
+            <!-- Brand Logo Header -->
+            <div class="flex items-center justify-between">
+                <a href="{% url 'home' %}" hx-boost="false" class="flex items-center gap-2 hover:opacity-90 transition-opacity">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-600 to-sky-500 flex items-center justify-center shadow-lg shadow-blue-600/20">
+                        <i data-lucide="orbit" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-slate-800">Kriya</span>
+                </a>
             </div>
 
-            <div>
-                <label for="id_email" class="block text-sm font-semibold text-slate-700 mb-1">Email Address</label>
-                <input type="email" name="email" id="id_email" required
-                       class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-500 transition shadow-sm">
-                {% if form.email.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.email.errors.0 }}</p>
-                {% endif %}
+            <!-- Main Input Form Container (Expanded to max-w-lg for side-by-side items) -->
+            <div class="my-auto py-6 max-w-lg w-full mx-auto space-y-5">
+                <div>
+                    <h2 class="text-3xl font-black text-slate-900 tracking-tight">Create Account</h2>
+                    <p class="text-slate-500 text-sm mt-1">Join the Kriya grid to start employee matching or placement roster listing</p>
+                </div>
+
+                <form method="POST" action="{% url 'register' %}" hx-boost="false" class="space-y-4">
+                    {% csrf_token %}
+                    
+                    <!-- Row 1: Username & Email -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="username" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Username</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <i data-lucide="user" class="w-4 h-4"></i>
+                                </div>
+                                <input type="text" name="username" id="username" required
+                                       class="block w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-850 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm placeholder-slate-400"
+                                       placeholder="Username">
+                            </div>
+                            {% if form.username.errors %}<p class="text-red-500 text-xs mt-1">{{ form.username.errors.0 }}</p>{% endif %}
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Email Address</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <i data-lucide="mail" class="w-4 h-4"></i>
+                                </div>
+                                <input type="email" name="email" id="email" required
+                                       class="block w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-850 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm placeholder-slate-400"
+                                       placeholder="Email">
+                            </div>
+                            {% if form.email.errors %}<p class="text-red-500 text-xs mt-1">{{ form.email.errors.0 }}</p>{% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Phone & Role -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="phone_number" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Phone Number</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <i data-lucide="phone" class="w-4 h-4"></i>
+                                </div>
+                                <input type="text" name="phone_number" id="phone_number" required
+                                       class="block w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-850 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm placeholder-slate-400"
+                                       placeholder="Phone">
+                            </div>
+                            {% if form.phone_number.errors %}<p class="text-red-500 text-xs mt-1">{{ form.phone_number.errors.0 }}</p>{% endif %}
+                        </div>
+
+                        <div>
+                            <label for="id_role" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Register as</label>
+                            <select name="role" id="id_role" required
+                                    class="block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-850 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm">
+                                <option value="WORKER">Employee (Looking for work)</option>
+                                <option value="CLIENT">Employer (Looking to hire)</option>
+                            </select>
+                            {% if form.role.errors %}<p class="text-red-500 text-xs mt-1">{{ form.role.errors.0 }}</p>{% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Password & Confirm -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="password" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Password</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <i data-lucide="key-round" class="w-4 h-4"></i>
+                                </div>
+                                <input type="password" name="password" id="password" required
+                                       class="block w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-850 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm placeholder-slate-400"
+                                       placeholder="Password">
+                            </div>
+                            {% if form.password.errors %}<p class="text-red-500 text-xs mt-1">{{ form.password.errors.0 }}</p>{% endif %}
+                        </div>
+
+                        <div>
+                            <label for="password_confirm" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Confirm Password</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <i data-lucide="key-round" class="w-4 h-4"></i>
+                                </div>
+                                <input type="password" name="password_confirm" id="password_confirm" required
+                                       class="block w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-850 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm placeholder-slate-400"
+                                       placeholder="Confirm password">
+                            </div>
+                            {% if form.password_confirm.errors %}<p class="text-red-500 text-xs mt-1">{{ form.password_confirm.errors.0 }}</p>{% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Create CTA -->
+                    <button type="submit" 
+                            class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-semibold rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-blue-600/35 transition-all text-sm flex items-center justify-center gap-2 group pt-2.5 pb-2.5 mt-2 cursor-pointer">
+                        Create Account
+                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform"></i>
+                    </button>
+                </form>
+
+                <div class="text-center text-xs text-slate-500 mt-4">
+                    Already have an account? 
+                    <a href="{% url 'login' %}" class="font-semibold text-blue-600 hover:text-blue-500 transition-colors ml-1">Log In</a>
+                </div>
+            </div>
+
+            <!-- Bottom: Brand Footer Info -->
+            <div class="border-t border-slate-200 pt-6 text-center">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Skill Grid Placement Network</span>
             </div>
         </div>
 
-        <!-- Row 2: Phone & Role -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <label for="id_phone_number" class="block text-sm font-semibold text-slate-700 mb-1">Phone Number</label>
-                <input type="text" name="phone_number" id="id_phone_number" required
-                       class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-500 transition shadow-sm">
-                {% if form.phone_number.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.phone_number.errors.0 }}</p>
-                {% endif %}
+        <!-- RIGHT HALF: Dynamic Slideshow Panel -->
+        <div x-data="{ 
+                 activeSlide: 1,
+                 slidesCount: 3,
+                 isPlaying: true,
+                 slideInterval: null,
+                 startSlideshow() {
+                     this.slideInterval = setInterval(() => {
+                         this.activeSlide = (this.activeSlide % this.slidesCount) + 1;
+                     }, 7000);
+                 }
+             }"
+             x-init="startSlideshow()"
+             class="hidden md:flex md:w-1/2 relative overflow-hidden bg-slate-950 flex-col justify-center items-center p-16 select-none">
+            
+            <!-- Glow Orbs & Background effects -->
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(37,99,235,0.15),rgba(255,255,255,0))]"></div>
+            <div class="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+            <div class="absolute -bottom-1/4 -left-1/4 w-[500px] h-[500px] bg-sky-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+            <!-- Slides Container -->
+            <div class="relative w-full max-w-md min-h-[420px] flex items-center justify-center">
+                
+                <!-- Slide 1: Skill Grid Orbital matching -->
+                <div x-show="activeSlide === 1"
+                     x-transition:enter="transition ease-out duration-700 transform translate-x-12 opacity-0"
+                     x-transition:enter-start="transform translate-x-12 opacity-0"
+                     x-transition:enter-end="transform translate-x-0 opacity-100"
+                     x-transition:leave="transition ease-in duration-500 transform -translate-x-12 opacity-0"
+                     class="absolute inset-0 flex flex-col items-center justify-center space-y-6 text-center">
+                    
+                    <!-- Concentric Circles Orbital Graphic -->
+                    <div class="relative w-64 h-64 flex items-center justify-center scale-95 sm:scale-100 select-none">
+                        <!-- Center Logo Badge -->
+                        <div class="z-10 w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-sky-500 flex items-center justify-center shadow-lg shadow-blue-600/30 border border-blue-500/20 animate-breathe">
+                            <i data-lucide="orbit" class="w-8 h-8 text-white"></i>
+                        </div>
+                        
+                        <!-- Inner Concentric Ring -->
+                        <div class="absolute w-36 h-36 rounded-full border border-slate-800/50"></div>
+                        <!-- Inner Ring Orbiting Badges -->
+                        <div class="absolute w-36 h-36 pointer-events-none animate-orbit-inner">
+                            <!-- Employer Icon -->
+                            <div class="absolute top-2.5 left-2.5 w-8 h-8 rounded-full bg-slate-900 border border-slate-800 shadow-md flex items-center justify-center animate-orbit-inner-reverse">
+                                <i data-lucide="building-2" class="w-4 h-4 text-blue-400"></i>
+                            </div>
+                            <!-- Employee Icon -->
+                            <div class="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-slate-900 border border-slate-800 shadow-md flex items-center justify-center animate-orbit-inner-reverse">
+                                <i data-lucide="user-check" class="w-4 h-4 text-emerald-400"></i>
+                            </div>
+                        </div>
+
+                        <!-- Outer Concentric Ring -->
+                        <div class="absolute w-52 h-52 rounded-full border border-dashed border-slate-800/30"></div>
+                        <!-- Outer Ring Orbiting Badge -->
+                        <div class="absolute w-52 h-52 pointer-events-none animate-orbit-middle">
+                            <!-- Coordinator Shield (top) -->
+                            <div class="absolute -top-4 left-[calc(50%-1rem)] w-8 h-8 rounded-full bg-slate-900 border border-slate-800 shadow-md flex items-center justify-center animate-orbit-middle-reverse">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-sky-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-3xl font-extrabold tracking-tight text-white">
+                        Dynamic Skilling Grid
+                    </h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Connecting trained, certified employees with verified, safety-compliant employers in real-time.
+                    </p>
+                </div>
+
+                <!-- Slide 2: Core skilling -->
+                <div x-show="activeSlide === 2"
+                     x-transition:enter="transition ease-out duration-700 transform translate-x-12 opacity-0"
+                     x-transition:enter-start="transform translate-x-12 opacity-0"
+                     x-transition:enter-end="transform translate-x-0 opacity-100"
+                     x-transition:leave="transition ease-in duration-500 transform -translate-x-12 opacity-0"
+                     class="absolute inset-0 flex flex-col items-center justify-center space-y-6 text-center"
+                     style="display: none;">
+                    
+                    <div class="w-48 h-48 rounded-3xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-2xl border border-blue-500/10">
+                        <i data-lucide="award" class="w-20 h-20 text-white animate-pulse"></i>
+                    </div>
+                    
+                    <h3 class="text-3xl font-extrabold tracking-tight text-white">
+                        Vetted Professional Skills
+                    </h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Every candidate on Kriya undergoes structured training in masonry, plumbing, or electrical vocations to match exact project requirements.
+                    </p>
+                </div>
+
+                <!-- Slide 3: Vetted sites -->
+                <div x-show="activeSlide === 3"
+                     x-transition:enter="transition ease-out duration-700 transform translate-x-12 opacity-0"
+                     x-transition:enter-start="transform translate-x-12 opacity-0"
+                     x-transition:enter-end="transform translate-x-0 opacity-100"
+                     x-transition:leave="transition ease-in duration-500 transform -translate-x-12 opacity-0"
+                     class="absolute inset-0 flex flex-col items-center justify-center space-y-6 text-center"
+                     style="display: none;">
+                    
+                    <div class="w-48 h-48 rounded-3xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center shadow-2xl border border-sky-500/10">
+                        <i data-lucide="safety-cone" class="w-20 h-20 text-white"></i>
+                    </div>
+                    
+                    <h3 class="text-3xl font-extrabold tracking-tight text-white">
+                        Welfare &amp; Safety Compliance
+                    </h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Ensuring safe working environments by pre-auditing employers for minimum wages, medical insurance, and accommodation standards.
+                    </p>
+                </div>
+
             </div>
 
-            <div>
-                <label for="id_role" class="block text-sm font-semibold text-slate-700 mb-1">I want to register as a:</label>
-                <select name="role" id="id_role" required
-                        class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 focus:bg-white focus:outline-none focus:border-blue-500 transition shadow-sm">
-                    <option value="WORKER">Employee (Looking for employment)</option>
-                    <option value="CLIENT">Employer (Looking to hire)</option>
-                </select>
-                {% if form.role.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.role.errors.0 }}</p>
-                {% endif %}
+            <!-- Slideshow Dot Navigation -->
+            <div class="absolute bottom-16 flex justify-center gap-2">
+                <template x-for="n in slidesCount">
+                    <button @click="activeSlide = n" 
+                            class="w-2.5 h-2.5 rounded-full transition-all duration-300"
+                            :class="activeSlide === n ? 'bg-white w-6' : 'bg-slate-700'"></button>
+                </template>
             </div>
+
         </div>
 
-        <!-- Row 3: Password & Confirmation -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <label for="id_password" class="block text-sm font-semibold text-slate-700 mb-1">Password</label>
-                <input type="password" name="password" id="id_password" required
-                       class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-500 transition shadow-sm">
-                {% if form.password.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.password.errors.0 }}</p>
-                {% endif %}
-            </div>
-
-            <div>
-                <label for="id_password_confirm" class="block text-sm font-semibold text-slate-700 mb-1">Confirm Password</label>
-                <input type="password" name="password_confirm" id="id_password_confirm" required
-                       class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-blue-500 transition shadow-sm">
-                {% if form.password_confirm.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.password_confirm.errors.0 }}</p>
-                {% endif %}
-            </div>
-        </div>
-
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition shadow-md shadow-blue-600/10 mt-2 cursor-pointer">
-            Create Account
-        </button>
-    </form>
-
-    <div class="mt-6 text-center text-sm text-slate-500">
-        Already have an account? 
-        <a href="{% url 'login' %}" class="text-blue-600 font-semibold hover:underline">Log in here</a>
     </div>
-</div>
-{% endblock %}
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
