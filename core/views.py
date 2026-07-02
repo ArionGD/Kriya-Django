@@ -9,9 +9,6 @@ def program_view(request):
 
 def support_view(request):
     if request.method == 'POST':
-        messages.success(request, "Your query has been logged. A Kriya coordinator will review your inquiry or grievance and follow up within 24 hours.")
+        messages.success(request, "Your inquiry has been successfully logged! A Kriya coordinator will review your ticket and contact you shortly.")
         return redirect('core:support')
     return render(request, 'core/support.html')
-
-def help_guide_view(request):
-    return render(request, 'core/help_guide.html')

@@ -157,13 +157,6 @@
             
             <!-- Right: Actions --> 
             <div class="flex-1 flex items-center justify-end gap-4">
-                <!-- Help Icon Button -->
-                <a href="{% url 'core:help_guide' %}" 
-                   @click="activeTab = 'help'; updatePill()"
-                   class="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-500 hover:text-slate-800 hover:scale-105 transition-all duration-200 focus:outline-none cursor-pointer" 
-                   title="Help &amp; Guides"> 
-                    <i data-lucide="help-circle" class="w-4 h-4"></i>
-                </a>
 
                 {% if user.is_authenticated %}
                     {% if user.is_manager_user %}
@@ -263,12 +256,6 @@
                                 <a href="{% url 'core:support' %}" class="group flex items-center gap-2 hover:text-blue-600 transition-colors duration-200"> 
                                     <i data-lucide="headphones" class="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
                                     Support Desk
-                                </a> 
-                            </li> 
-                            <li> 
-                                <a href="{% url 'core:help_guide' %}" class="group flex items-center gap-2 hover:text-blue-600 transition-colors duration-200"> 
-                                    <i data-lucide="book-open" class="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors"></i>
-                                    Employee &amp; Employer Docs
                                 </a> 
                             </li> 
                         </ul> 
