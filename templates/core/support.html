@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Support Desk — Kriya{% endblock %}
+{% block title %}Support &amp; Grievance Desk — Kriya{% endblock %}
 
 {% block content %}
 <div class="max-w-2xl w-full mx-auto bg-white border border-slate-200 p-8 rounded-xl shadow-sm my-8">
-    <h2 class="text-3xl font-black text-slate-900 mb-2">Contact &amp; Support</h2>
-    <p class="text-slate-500 text-sm mb-6">Have questions about the Skill Grid registration, training criteria, or compliance audits? Reach out to the Kriya support desk.</p>
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Inquiries &amp; Grievance Desk</h2>
+    <p class="text-slate-500 text-sm mb-6">Need to report a wage variance, request vocational training enrollment, or schedule a workplace audit? Fill out the details below.</p>
 
     <form method="post" class="space-y-6">
         {% csrf_token %}
@@ -14,31 +14,51 @@
             <div>
                 <label for="name" class="block text-sm font-semibold text-slate-700 mb-2">Your Name</label>
                 <input type="text" name="name" id="name" placeholder="Full name" required
-                       class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900 focus:outline-none focus:border-blue-500 transition shadow-sm">
+                       class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 focus:outline-none focus:border-blue-500 transition shadow-sm">
             </div>
 
             <div>
                 <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
                 <input type="email" name="email" id="email" placeholder="Email address" required
-                       class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900 focus:outline-none focus:border-blue-500 transition shadow-sm">
+                       class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 focus:outline-none focus:border-blue-500 transition shadow-sm">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+                <label for="phone" class="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
+                <input type="text" name="phone" id="phone" placeholder="Registered phone" required
+                       class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 focus:outline-none focus:border-blue-500 transition shadow-sm">
+            </div>
+
+            <div>
+                <label for="inquiry_type" class="block text-sm font-semibold text-slate-700 mb-2">Inquiry / Report Type</label>
+                <select name="inquiry_type" id="inquiry_type" required
+                        class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 focus:outline-none focus:border-blue-500 transition shadow-sm">
+                    <option value="GENERAL">General Information &amp; FAQ</option>
+                    <option value="TRAINING">Vocational Training Course Enrollment</option>
+                    <option value="AUDIT">Employer Site Vetting Request</option>
+                    <option value="GRIEVANCE">Wage Grievance / Legal Dispute Report</option>
+                </select>
             </div>
         </div>
 
         <div>
             <label for="subject" class="block text-sm font-semibold text-slate-700 mb-2">Subject</label>
-            <input type="text" name="subject" id="subject" placeholder="What is this regarding?" required
-                   class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900 focus:outline-none focus:border-blue-500 transition shadow-sm">
+            <input type="text" name="subject" id="subject" placeholder="Brief summary" required
+                   class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 focus:outline-none focus:border-blue-500 transition shadow-sm">
         </div>
 
         <div>
-            <label for="message" class="block text-sm font-semibold text-slate-700 mb-2">Message Description</label>
-            <textarea name="message" id="message" rows="6" placeholder="Describe your question or issue..." required
-                      class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2 text-slate-900 focus:outline-none focus:border-blue-500 transition shadow-sm"></textarea>
+            <label for="message" class="block text-sm font-semibold text-slate-700 mb-2">Detailed Description</label>
+            <textarea name="message" id="message" rows="6" placeholder="Describe the details..." required
+                      class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 focus:outline-none focus:border-blue-500 transition shadow-sm"></textarea>
+            <p class="text-slate-400 text-xs mt-2">Note: Wage grievances and legal disputes are handled with strict confidentiality by NGO coordinators.</p>
         </div>
 
         <div class="pt-2">
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-lg transition shadow-md shadow-blue-600/10 cursor-pointer text-sm">
-                Submit Support ticket
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition shadow-md shadow-blue-600/10 cursor-pointer text-sm">
+                Submit Ticket
             </button>
         </div>
     </form>

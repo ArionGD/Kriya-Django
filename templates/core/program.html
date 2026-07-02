@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %}Skill Grid Program — Kriya{% endblock %}
+
+{% block content %}
+<div class="space-y-16 py-12 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto">
+    
+    <!-- Header Hero -->
+    <div class="text-center max-w-3xl mx-auto space-y-4">
+        <span class="text-blue-600 font-bold uppercase tracking-wider text-xs bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">NGO Skill Grid Program</span>
+        <h1 class="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">Empowering Workforce, Guaranteeing Compliance</h1>
+        <p class="text-slate-500 text-base leading-relaxed">
+            Project Kriya bridges the gap between skilled blue-collar employees and socially responsible employers. Through structured vocational skilling and strict legal audits, we protect livelihood rights.
+        </p>
+    </div>
+
+    <!-- Core Pillars Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Pillar 1: Vocational Skilling -->
+        <div class="bg-white border border-slate-200 p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center">
+                <i data-lucide="award" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Vocational skilling</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+                Candidates undergo comprehensive practical training under master craftspeople. Our curriculum is tailored to industry needs, certifying candidates across masonry, plumbing, electrical wiring, and construction helpers.
+            </p>
+            <div class="border-t border-slate-100 pt-3 text-xs text-blue-600 font-semibold flex items-center gap-1">
+                <span>Core Training Syllabus</span>
+                <i data-lucide="arrow-right" class="w-3 h-3"></i>
+            </div>
+        </div>
+
+        <!-- Pillar 2: Legal & Wage Compliance -->
+        <div class="bg-white border border-slate-200 p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center">
+                <i data-lucide="scale" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Legal Compliance</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+                No under-the-table payments. We strictly enforce local minimum wage structures, timely digital payouts, and verify registration credentials to protect candidates from exploitation.
+            </p>
+            <div class="border-t border-slate-100 pt-3 text-xs text-blue-600 font-semibold flex items-center gap-1">
+                <span>Wage Protection Guidelines</span>
+                <i data-lucide="arrow-right" class="w-3 h-3"></i>
+            </div>
+        </div>
+
+        <!-- Pillar 3: On-Site Safety Auditing -->
+        <div class="bg-white border border-slate-200 p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-200 transition-all space-y-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Site Safety Audits</h3>
+            <p class="text-slate-500 text-xs leading-relaxed">
+                We pre-audit all employer project sites. Safe workspace parameters, emergency health facilities, hygienic meal provisions, and clean accommodations are mandatory checkmarks.
+            </p>
+            <div class="border-t border-slate-100 pt-3 text-xs text-blue-600 font-semibold flex items-center gap-1">
+                <span>Audit Standards Documentation</span>
+                <i data-lucide="arrow-right" class="w-3 h-3"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Skilling & Training Curricula Breakdown -->
+    <div class="bg-slate-100/50 border border-slate-200/60 rounded-2xl p-8 lg:p-12 space-y-8">
+        <div class="text-center max-w-xl mx-auto space-y-2">
+            <h2 class="text-2xl font-black text-slate-900">Training syllabus</h2>
+            <p class="text-slate-500 text-xs">A structured course blueprint that ensures a highly skilled, safety-certified workforce.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Vocation 1 -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 space-y-3">
+                <h4 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                    <span>Masonry &amp; Concreting</span>
+                </h4>
+                <p class="text-slate-500 text-xs leading-relaxed">Structural brickwork, plastering, cement ratios, tile layout, and basic blueprints reading. Includes personal safety protocols and weight lifting training.</p>
+            </div>
+            <!-- Vocation 2 -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 space-y-3">
+                <h4 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                    <span>Residential Electrics</span>
+                </h4>
+                <p class="text-slate-500 text-xs leading-relaxed">Basic conduits installation, distribution board layout, power circuit wiring, earth grounding diagnostics, and emergency insulation safety checkmarks.</p>
+            </div>
+            <!-- Vocation 3 -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 space-y-3">
+                <h4 class="font-bold text-slate-900 text-base flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+                    <span>Sanitation &amp; Plumbing</span>
+                </h4>
+                <p class="text-slate-500 text-xs leading-relaxed">Piping layouts, water supply connections, drainage layout, leak diagnostic audits, valve fittings, and high-pressure appliance installations.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Legal Compliance Charter -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+            <h2 class="text-3xl font-black text-slate-900 leading-tight">Our Legal &amp; Welfare Compliance Charter</h2>
+            <p class="text-slate-500 text-sm leading-relaxed">
+                Project Kriya operates under a strict legal vetting charter designed by the SEA Movement. We believe that fair work goes beyond the payroll. Our audits secure the fundamental rights of all placed employees.
+            </p>
+            
+            <ul class="space-y-3.5 text-slate-700 text-xs font-medium">
+                <li class="flex items-center gap-3">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                    <span>Mandatory adherence to State Minimum Wage Regulations with digital disbursals</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                    <span>Group medical safety insurance policies provided for all heavy labor placements</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                    <span>Bi-weekly site audits conducted by NGO coordinators to review meals &amp; housing</span>
+                </li>
+                <li class="flex items-center gap-3">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 text-blue-600 shrink-0"></i>
+                    <span>Anonymous grievance hotline for placed workers to report legal or wage disputes</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Call-to-action Block -->
+        <div class="bg-gradient-to-tr from-blue-700 to-indigo-800 text-white rounded-2xl p-8 lg:p-10 flex flex-col justify-between h-full shadow-lg shadow-blue-900/10">
+            <div class="space-y-4">
+                <h3 class="text-2xl font-bold leading-tight">Join a Compliant, High-Performing Network</h3>
+                <p class="text-blue-100 text-xs leading-relaxed">
+                    Whether you are an organization looking for skilled, certified candidates, or an employee looking for a safe, high-paying placement, Kriya is built for you.
+                </p>
+            </div>
+            
+            <div class="mt-8 flex flex-col sm:flex-row gap-4 pt-4 border-t border-blue-600/50">
+                <a href="{% url 'register' %}" class="bg-white text-blue-700 font-bold px-6 py-2.5 rounded-xl text-center text-xs hover:bg-blue-50 transition">
+                    Register to Hire / Work
+                </a>
+                <a href="{% url 'core:support' %}" class="bg-blue-600/35 border border-blue-500/30 text-white font-semibold px-6 py-2.5 rounded-xl text-center text-xs hover:bg-blue-600/50 transition">
+                    Contact Coordinator Desk
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

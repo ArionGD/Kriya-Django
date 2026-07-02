@@ -4,12 +4,12 @@ from django.contrib import messages
 def home_view(request):
     return render(request, 'core/home.html')
 
-def features_view(request):
-    return render(request, 'core/features.html')
+def program_view(request):
+    return render(request, 'core/program.html')
 
 def support_view(request):
     if request.method == 'POST':
-        messages.success(request, "Your message has been received! Our coordination team will get back to you shortly.")
+        messages.success(request, "Your query has been logged. A Kriya coordinator will review your inquiry or grievance and follow up within 24 hours.")
         return redirect('core:support')
     return render(request, 'core/support.html')
 
