@@ -12,7 +12,7 @@
             <h1 class="text-3xl font-black text-slate-900">Client Console</h1>
             <p class="text-slate-500 text-sm mt-1">Submit staffing requirements and monitor active deployments</p>
         </div>
-        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition text-sm shadow-sm cursor-pointer">Post New Job Requirement</button>
+        <a href="{% url 'client:post_requirement' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition text-sm shadow-sm cursor-pointer inline-block">Post New Job Requirement</a>
     </div>
 
     <!-- Quick Metrics -->
@@ -39,25 +39,26 @@
         <div class="space-y-4">
             <h2 class="text-xl font-bold text-slate-900">My Active Requirements</h2>
             <div class="bg-white border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-100 shadow-sm">
+                {% for req in requirements %}
                 <div class="p-6">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h4 class="font-bold text-slate-800">Plumbers (3 Workers)</h4>
-                            <p class="text-slate-500 text-sm mt-1">Daily Wage: ₹750/day • Location: Chennai Central</p>
+                            <h4 class="font-bold text-slate-800">{{ req.title }} ({{ req.workers_needed }} Workers)</h4>
+                            <p class="text-slate-500 text-sm mt-1">Daily Wage: ₹{{ req.daily_wage }}/day • Location: {{ req.location }}</p>
+                            <p class="text-slate-500 text-xs mt-1">Start Date: {{ req.start_date|date:"M d, Y"|default:"TBD" }} • Duration: {{ req.duration_days }} days</p>
                         </div>
-                        <span class="bg-orange-50 text-orange-700 text-xs px-2.5 py-1 rounded border border-orange-100 font-semibold">Matching Queue</span>
+                        {% if req.status == 'MATCHED' %}
+                        <span class="bg-blue-50 text-blue-700 text-xs px-2.5 py-1 rounded border border-blue-100 font-semibold">{{ req.status }}</span>
+                        {% else %}
+                        <span class="bg-orange-50 text-orange-700 text-xs px-2.5 py-1 rounded border border-orange-100 font-semibold">{{ req.status }}</span>
+                        {% endif %}
                     </div>
                 </div>
-
-                <div class="p-6">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h4 class="font-bold text-slate-800">Electricians (2 Workers)</h4>
-                            <p class="text-slate-500 text-sm mt-1">Daily Wage: ₹900/day • Location: Chennai North</p>
-                        </div>
-                        <span class="bg-blue-50 text-blue-700 text-xs px-2.5 py-1 rounded border border-blue-100 font-semibold">Fulfilled</span>
-                    </div>
+                {% empty %}
+                <div class="p-6 text-center text-slate-500 text-sm">
+                    No active requirements. <a href="{% url 'client:post_requirement' %}" class="text-blue-600 hover:underline font-semibold">Post one now.</a>
                 </div>
+                {% endfor %}
             </div>
         </div>
 

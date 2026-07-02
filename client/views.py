@@ -40,12 +40,14 @@ def post_requirement_view(request):
 
 @client_required
 def active_staff_view(request):
-    # Mock data for demonstration
-    active_staff = [
-        {'name': 'Ravi Chandran', 'vocation': 'Mason', 'site': 'Chennai Central', 'status': 'Working'},
-        {'name': 'Aditya Kumar', 'vocation': 'Welder', 'site': 'Chennai North', 'status': 'Working'},
-    ]
-    return render(request, 'client/active_staff.html', {'active_staff': active_staff})
+    from worker.models import JobAssignment
+    # Fetch active assignments for jobs posted by this employer
+    active_assignments = JobAssignment.objects.filter(
+        job__employer=request.user,
+        status='ASSIGNED'
+    ).select_related('worker', 'worker__user', 'job').order_by('-assigned_at')
+    
+    return render(request, 'client/active_staff.html', {'active_assignments': active_assignments})
 
 @client_required
 def settings_view(request):

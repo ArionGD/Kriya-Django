@@ -13,8 +13,8 @@
             <p class="text-slate-500 text-sm mt-1">Manage active rosters, audit clients, and dispatch matched workers</p>
         </div>
         <div class="flex space-x-3">
-            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition text-sm shadow-sm cursor-pointer">Add New Worker</button>
-            <button class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-4 py-2 rounded-lg font-semibold transition text-sm shadow-sm cursor-pointer">Review Client Audits</button>
+            <a href="{% url 'manager:register_worker' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition text-sm shadow-sm cursor-pointer inline-block">Add New Worker</a>
+            <a href="{% url 'manager:client_audits' %}" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-4 py-2 rounded-lg font-semibold transition text-sm shadow-sm cursor-pointer inline-block">Review Client Audits</a>
         </div>
     </div>
 
@@ -28,20 +28,20 @@
 
         <div class="bg-white border border-slate-200 p-6 rounded-xl relative overflow-hidden shadow-sm">
             <div class="absolute right-4 top-4 text-3xl opacity-20">✅</div>
-            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Deployed Workers</p>
-            <h3 class="text-3xl font-black text-blue-600 mt-2">{{ deployed_workers }}</h3>
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Available Workers</p>
+            <h3 class="text-3xl font-black text-blue-600 mt-2">{{ available_workers }}</h3>
         </div>
 
         <div class="bg-white border border-slate-200 p-6 rounded-xl relative overflow-hidden shadow-sm">
             <div class="absolute right-4 top-4 text-3xl opacity-20">⏳</div>
-            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Pending Placements</p>
-            <h3 class="text-3xl font-black text-orange-500 mt-2">{{ pending_requests }}</h3>
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Pending Jobs</p>
+            <h3 class="text-3xl font-black text-orange-500 mt-2">{{ active_jobs }}</h3>
         </div>
 
         <div class="bg-white border border-slate-200 p-6 rounded-xl relative overflow-hidden shadow-sm">
             <div class="absolute right-4 top-4 text-3xl opacity-20">🏢</div>
-            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Active Clients</p>
-            <h3 class="text-3xl font-black text-sky-600 mt-2">{{ active_clients }}</h3>
+            <p class="text-slate-400 text-xs font-bold uppercase tracking-wider">Total Placements</p>
+            <h3 class="text-3xl font-black text-sky-600 mt-2">{{ total_placements }}</h3>
         </div>
     </div>
 
@@ -55,33 +55,25 @@
             </h2>
             
             <div class="bg-white border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-100 shadow-sm">
+                {% for job in recent_jobs %}
                 <div class="p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
                         <div class="flex items-center space-x-2">
-                            <h4 class="font-bold text-slate-800">Metro Construction Corp</h4>
-                            <span class="bg-blue-50 text-blue-700 text-xs px-2 py-0.5 rounded border border-blue-100">Client Vetted</span>
+                            <h4 class="font-bold text-slate-800">{{ job.employer.username }} - {{ job.title }}</h4>
+                            <span class="bg-blue-50 text-blue-700 text-xs px-2 py-0.5 rounded border border-blue-100">{{ job.status }}</span>
                         </div>
-                        <p class="text-slate-500 text-sm mt-1">Needs: <strong class="text-blue-600">5 Painters</strong> • Location: Chennai North</p>
+                        <p class="text-slate-500 text-sm mt-1">Needs: <strong class="text-blue-600">{{ job.workers_needed }} Workers</strong> • Location: {{ job.location }}</p>
+                        <p class="text-slate-500 text-xs mt-1">Skills: {{ job.skills_required|default:"Any" }}</p>
                     </div>
                     <div class="flex space-x-2">
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer">Find Matches</button>
-                        <button class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer">Decline</button>
+                        <a href="{% url 'manager:job_matching' job.id %}" class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer">Find Matches</a>
                     </div>
                 </div>
-
-                <div class="p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <h4 class="font-bold text-slate-800">Green Logistics Ltd</h4>
-                            <span class="bg-blue-50 text-blue-700 text-xs px-2 py-0.5 rounded border border-blue-100">Client Vetted</span>
-                        </div>
-                        <p class="text-slate-500 text-sm mt-1">Needs: <strong class="text-blue-600">2 Warehouse Loaders</strong> • Location: Chennai Central</p>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer">Find Matches</button>
-                        <button class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer">Decline</button>
-                    </div>
+                {% empty %}
+                <div class="p-6 text-center text-slate-500 text-sm">
+                    No active job requirements in queue.
                 </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -89,27 +81,21 @@
         <div class="space-y-4">
             <h2 class="text-xl font-bold text-slate-900">Recent Worker Registrations</h2>
             <div class="bg-white border border-slate-200 p-6 rounded-xl space-y-4 shadow-sm">
+                {% for worker in recent_workers %}
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                     <div>
-                        <h4 class="font-bold text-slate-800 text-sm">Aditya Kumar</h4>
-                        <p class="text-slate-500 text-xs mt-0.5">Vocation: Welder • Certified</p>
+                        <h4 class="font-bold text-slate-800 text-sm">{{ worker.user.get_full_name|default:worker.user.username }}</h4>
+                        <p class="text-slate-500 text-xs mt-0.5">Skills: {{ worker.skills|default:"None Listed" }}</p>
                     </div>
+                    {% if worker.is_available %}
                     <span class="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded border border-blue-100 font-medium">Ready</span>
+                    {% else %}
+                    <span class="bg-orange-50 text-orange-700 text-xs px-2 py-1 rounded border border-orange-100 font-medium">Assigned</span>
+                    {% endif %}
                 </div>
-                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <div>
-                        <h4 class="font-bold text-slate-800 text-sm">Mariammal S.</h4>
-                        <p class="text-slate-500 text-xs mt-0.5">Vocation: Cook • In Training</p>
-                    </div>
-                    <span class="bg-orange-50 text-orange-700 text-xs px-2 py-1 rounded border border-orange-100 font-medium">Training</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h4 class="font-bold text-slate-800 text-sm">Ravi Chandran</h4>
-                        <p class="text-slate-500 text-xs mt-0.5">Vocation: Mason • Certified</p>
-                    </div>
-                    <span class="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded border border-blue-100 font-medium">Ready</span>
-                </div>
+                {% empty %}
+                <div class="text-slate-500 text-sm text-center">No recent workers registered.</div>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -13,20 +13,31 @@ def worker_required(view_func):
 
 @worker_required
 def dashboard_view(request):
+    from .models import WorkerProfile, JobAssignment
+    try:
+        profile = request.user.worker_profile
+    except WorkerProfile.DoesNotExist:
+        profile = None
+    
+    active_assignment = None
+    if profile:
+        active_assignment = JobAssignment.objects.filter(worker=profile, status='ASSIGNED').first()
+        
     context = {
-        'worker_status': 'Ready for Placement',
-        'current_job': 'None',
-        'training_completed': True,
+        'profile': profile,
+        'active_assignment': active_assignment,
     }
     return render(request, 'worker/dashboard.html', context)
 
 @worker_required
 def my_assignments_view(request):
-    # Mock data
-    assignments = [
-        {'title': 'Mason Assistant', 'employer': 'Chennai Builders Ltd', 'duration': '15 Days', 'status': 'Completed', 'wage': '₹600/day'},
-        {'title': 'Painter Helpers', 'employer': 'Metro Decorators', 'duration': 'Ongoing', 'status': 'Active', 'wage': '₹700/day'}
-    ]
+    from .models import WorkerProfile, JobAssignment
+    try:
+        profile = request.user.worker_profile
+        assignments = JobAssignment.objects.filter(worker=profile).select_related('job', 'job__employer').order_by('-assigned_at')
+    except WorkerProfile.DoesNotExist:
+        assignments = []
+        
     return render(request, 'worker/my_assignments.html', {'assignments': assignments})
 
 @worker_required

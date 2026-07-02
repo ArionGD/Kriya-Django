@@ -21,15 +21,24 @@
     <!-- Details Card -->
     <div class="bg-white border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-100 shadow-sm">
         <div class="p-6">
-            <h3 class="text-lg font-bold text-slate-900 mb-4">Livelihood & Deployment Details</h3>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Livelihood & Deployment Details</h3>
             <div class="grid grid-cols-2 gap-6 text-sm">
                 <div>
                     <span class="text-slate-400 block">Roster Status</span>
-                    <strong class="text-blue-600 block mt-1 text-base">{{ worker_status }}</strong>
+                    {% if profile.is_available %}
+                    <strong class="text-blue-600 dark:text-blue-400 block mt-1 text-base">Ready for Placement</strong>
+                    {% else %}
+                    <strong class="text-orange-600 dark:text-orange-400 block mt-1 text-base">Currently Assigned</strong>
+                    {% endif %}
                 </div>
                 <div>
                     <span class="text-slate-400 block">Current Assignment</span>
-                    <strong class="text-slate-700 block mt-1 text-base">{{ current_job }}</strong>
+                    {% if active_assignment %}
+                    <strong class="text-slate-700 dark:text-slate-200 block mt-1 text-base">{{ active_assignment.job.title }} at {{ active_assignment.job.employer.username }}</strong>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Location: {{ active_assignment.job.location }} | Wage: ₹{{ active_assignment.job.daily_wage }}</p>
+                    {% else %}
+                    <strong class="text-slate-700 dark:text-slate-300 block mt-1 text-base">None</strong>
+                    {% endif %}
                 </div>
             </div>
         </div>

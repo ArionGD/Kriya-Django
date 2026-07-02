@@ -4,9 +4,13 @@ from django.conf import settings
 class JobRequirement(models.Model):
     employer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    skills_required = models.TextField(blank=True, help_text="Specific skills needed")
     workers_needed = models.IntegerField(default=1)
     daily_wage = models.DecimalField(max_digits=10, decimal_places=2)
     location = models.CharField(max_length=200)
+    start_date = models.DateField(null=True, blank=True)
+    duration_days = models.IntegerField(default=1)
     provides_housing = models.BooleanField(default=False)
     provides_meals = models.BooleanField(default=False)
     provides_medical = models.BooleanField(default=False)
